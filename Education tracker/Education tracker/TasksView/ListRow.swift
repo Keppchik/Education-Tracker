@@ -11,6 +11,8 @@ struct ListRow: View {
     @Binding var name: String
     @Binding var items: [String]
     @State var isExpanded = false
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         Button {
             isExpanded.toggle()
@@ -19,42 +21,54 @@ struct ListRow: View {
             HStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.gray.opacity(0.3))
+                        .fill(colorScheme == .light ? Color.gray.opacity(0.3) : Color.gray.opacity(0.7))
                         .frame(width: 30, height: 30)
                     Text("☰")
                         .font(.system(size: 24))
                         .padding(.bottom, 5)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0))
                 }
+                
                 Text(name)
+                
+                Spacer()
+                
+                Text(String(items.count))
+                    .padding(.trailing)
             }
+            .contentShape(Rectangle())
             .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(.black)
+            .foregroundColor(.primary)
             .padding(.leading)
         }
-        .buttonStyle(PlainButtonStyle())
         
-        ForEach(items, id: \.self) { item in
+        ForEach(Array(items.enumerated()), id: \.element) { index, item in
             if isExpanded {
-                Button { } //TODO: Добавить переход на изменение задачи
+                Button { }  //TODO: Добавить переход на экран задачи
                 label: {
                     HStack {
                         Image(systemName: "circle.fill")
                             .font(.system(size: 8))
+                        
                         Text(item)
                     }
-                    .foregroundStyle(.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(.primary)
                     .padding(.leading, 56)
                     .padding(.bottom, 8)
                 }
-                .contentShape(Rectangle())
-                .buttonStyle(DefaultButtonStyle())
+                .transition(.asymmetric(insertion: .opacity, removal: .identity)
+                    .animation(
+                        .spring(response: 0.5, dampingFraction: 0.7)
+                        .delay(Double(index) * 0.15)
+                    )
+                )
             }
         }
     }
 }
 
 #Preview {
-    ListRow(name: .constant("List name"), items: .constant(["Item1", "Item2", "Item3"]))
+    ListRow(name: .constant("List name"), items: .constant(
+        ["Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9", "Item10"]))
 }
