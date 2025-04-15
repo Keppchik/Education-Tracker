@@ -5,6 +5,7 @@
 //  Created by Иван Кретов on 05.04.2025.
 //
 
+
 import SwiftUI
 
 enum PageIndex: Int {
