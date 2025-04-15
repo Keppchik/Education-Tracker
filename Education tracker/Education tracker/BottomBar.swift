@@ -2,7 +2,7 @@
 //  BottomBar.swift
 //  Education tracker
 //
-//  Created by Иван Миронов on 11.04.2025.
+//  Created by Иван Кретов on 05.04.2025.
 //
 
 
