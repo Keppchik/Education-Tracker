@@ -15,8 +15,7 @@ enum PageIndex: Int {
 }
 
 struct BottomBar: View {
-    @Binding var selectedIndex: PageIndex // Changed from @State to @Binding
-    
+    @State var selectedIndex: PageIndex
     var body: some View {
         ZStack {
             Rectangle()
@@ -79,8 +78,6 @@ struct BottomBar: View {
     }
 }
 
-
-
 #Preview {
-    BottomBar(selectedIndex: .constant(.tasks)) // Use .constant for preview
+    BottomBar(selectedIndex: .tasks)
 }
