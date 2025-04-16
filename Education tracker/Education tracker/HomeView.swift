@@ -2,17 +2,18 @@ import SwiftUI
 
 struct HomeView: View {
     @State var todayTasks: [TaskItem] = [
-        TaskItem(title: "Team meeting", time: "2:00 PM"),
-        TaskItem(title: "Submit report", time: "4:30 PM")
+    
+        TaskItem(title: "Team meeting", date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!),
+        TaskItem(title: "Submit report", date: Calendar.current.date(bySettingHour: 16, minute: 30, second: 0, of: Date())!)
     ]
     
     @State var tomorrowTasks: [TaskItem] = [
-        TaskItem(title: "Client presentation", time: "10:00 AM")
+        TaskItem(title: "Client presentation", date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!)
     ]
     
     @State var laterTasks: [TaskItem] = [
-        TaskItem(title: "Project deadline", time: "Next week"),
-        TaskItem(title: "Quarterly review", time: "Next month")
+        TaskItem(title: "Project deadline", date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!),
+        TaskItem(title: "Quarterly review", date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!)
     ]
     
     var body: some View {
@@ -102,6 +103,7 @@ struct SectionView: View {
                 .font(.headline)
                 .foregroundColor(.black)
                 .padding(.horizontal)
+            
             ForEach($tasks.indices, id: \.self) { i in
                 TaskRow(task: $tasks[i])
             }
@@ -113,7 +115,7 @@ struct SectionView: View {
 
 struct TaskItem {
     var title: String
-    var time: String
+    var date: Date
     var isDone: Bool = false
 }
 
@@ -133,7 +135,7 @@ struct TaskRow: View {
                     .foregroundColor(task.isDone ? .gray : .black)
                 Spacer()
             }
-            Text(task.time)
+            Text("\(task.date, style: .time)")
                 .font(.caption)
                 .foregroundColor(.gray)
         }
