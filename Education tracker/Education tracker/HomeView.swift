@@ -2,18 +2,32 @@ import SwiftUI
 
 struct HomeView: View {
     @State var todayTasks: [TaskItem] = [
-    
-        TaskItem(title: "Team meeting", date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!),
-        TaskItem(title: "Submit report", date: Calendar.current.date(bySettingHour: 16, minute: 30, second: 0, of: Date())!)
+        TaskItem(
+            title: "Team meeting",
+            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!
+        ),
+        TaskItem(
+            title: "Submit report",
+            date: Calendar.current.date(bySettingHour: 16, minute: 30, second: 0, of: Date())!
+        )
     ]
     
     @State var tomorrowTasks: [TaskItem] = [
-        TaskItem(title: "Client presentation", date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!)
+        TaskItem(
+            title: "Client presentation",
+            date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!
+        )
     ]
     
     @State var laterTasks: [TaskItem] = [
-        TaskItem(title: "Project deadline", date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!),
-        TaskItem(title: "Quarterly review", date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!)
+        TaskItem(
+            title: "Project deadline",
+            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!
+        ),
+        TaskItem(
+            title: "Quarterly review",
+            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!
+        )
     ]
     
     var body: some View {
@@ -22,16 +36,19 @@ struct HomeView: View {
                 Image(systemName: "checklist")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundColor(.black)
+                
                 Text("Tasks")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                
                 Spacer()
+                
                 Button(action: {
                     print("Plus tapped")
                 }) {
                     Image(systemName: "plus")
-                        .font(.title2)
+                        .font(.system(size: 32, weight: .bold))  // Увеличенный плюс
                         .foregroundColor(.black)
                 }
             }
