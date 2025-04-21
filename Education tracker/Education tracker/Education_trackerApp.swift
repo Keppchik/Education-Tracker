@@ -11,7 +11,7 @@ import SwiftUI
 struct EducatorTrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            ContentView()
         }
     }
 }
