@@ -56,7 +56,7 @@ struct TypeTask: View {
                     HStack{
                         Spacer()
                         Text(index.name)
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 5)
                             .foregroundColor(SelectedType == index ? .blue : .gray)
                         if SelectedType == index {
                             Image(systemName: "checkmark")

@@ -49,7 +49,7 @@ struct StatusView: View {
                     HStack{
                         Spacer()
                         Text(index.name)
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 5)
                             .foregroundColor(selectedStatus == index ? .blue : .gray)
                         if selectedStatus == index {
                             Image(systemName: "checkmark")
