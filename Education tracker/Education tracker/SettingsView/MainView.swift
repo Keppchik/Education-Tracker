@@ -1,0 +1,39 @@
+//
+//  MainView.swift
+//  Education tracker
+//
+//  Created by Иван Кретов on 22.04.2025.
+//
+
+import SwiftUI
+
+struct MainView: View {
+    @State var selectedIndex: PageIndex = .house
+    var body: some View {
+        NavigationView {
+            ZStack(alignment: .bottom) {
+                TabView(selection: $selectedIndex) {
+                    HomeView()
+                        .padding(.top)
+                        .tag(PageIndex.house)
+                    
+                    TasksPageView()
+                        .padding(.top)
+                        .tag(PageIndex.tasks)
+                    
+                    SettingsView()
+                        .padding(.top)
+                        .tag(PageIndex.settings)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                
+                BottomBar(selectedIndex: $selectedIndex)
+            }
+            .edgesIgnoringSafeArea(.bottom)
+        }
+    }
+}
+
+#Preview {
+    MainView()
+}

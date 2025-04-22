@@ -51,13 +51,8 @@ struct TasksPageView: View {
             
             TasksButtons()
             
-            ZStack(alignment: .bottom) {
-                TasksList(myLists: $myLists)
-                    .padding(.top)
-                
-                BottomBar(selectedIndex: .tasks)
-            }
-            .edgesIgnoringSafeArea(.bottom)
+            TasksList(myLists: $myLists)
+                .padding(.top)
         }
         .sheet(isPresented: $newListSheet) {
             VStack(alignment: .center, spacing: 16) {

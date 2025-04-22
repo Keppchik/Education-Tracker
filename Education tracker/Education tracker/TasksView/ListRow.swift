@@ -27,6 +27,7 @@ struct ListRow: View {
                         .font(.system(size: 24))
                         .padding(.bottom, 5)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0))
+                        .animation(.default, value: isExpanded)
                 }
                 
                 Text(name)

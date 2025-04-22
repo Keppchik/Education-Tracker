@@ -15,20 +15,20 @@ enum PageIndex: Int {
 }
 
 struct BottomBar: View {
-    @State var selectedIndex: PageIndex
+    @Binding var selectedIndex: PageIndex
     var body: some View {
         ZStack {
             Rectangle()
                 .stroke(.primary, lineWidth: 1.5)
                 .fill(.background)
-                .frame(maxWidth: .infinity, maxHeight: 90)
+                .frame(maxWidth: .infinity, maxHeight: 80)
             
             HStack {
                 Spacer()
                 
                 Button { selectedIndex = .house }
                 label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "house")
                             .font(.system(size: 24))
                             .foregroundStyle(selectedIndex == .house ? Color.primary : Color.gray)
@@ -44,7 +44,7 @@ struct BottomBar: View {
                 
                 Button { selectedIndex = .tasks }
                 label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "list.bullet")
                             .font(.system(size: 24))
                             .foregroundStyle(selectedIndex == .tasks ? Color.primary : Color.gray)
@@ -55,12 +55,13 @@ struct BottomBar: View {
                             .font(.system(size: 16))
                     }
                 }
+                .padding(.horizontal, 20)
                 
                 Spacer()
                 
                 Button { selectedIndex = .settings }
                 label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "gearshape")
                             .font(.system(size: 24))
                             .foregroundStyle(selectedIndex == .settings ? Color.primary : Color.gray)
@@ -73,11 +74,11 @@ struct BottomBar: View {
                 }
                 Spacer()
             }
-            .padding(.bottom, 16)
+            .padding(.bottom, 10)
         }
     }
 }
 
 #Preview {
-    BottomBar(selectedIndex: .tasks)
+    BottomBar(selectedIndex: .constant(.tasks))
 }

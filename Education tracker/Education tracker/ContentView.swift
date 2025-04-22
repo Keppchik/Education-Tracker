@@ -9,8 +9,11 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @AppStorage("selectedTheme") private var selectedTheme: themeOptions = .systemDefault
+    
     var body: some View {
-        Text("Hello World!")
+        MainView()
+            .preferredColorScheme(selectedTheme.colorScheme)
     }
 }
 
@@ -18,4 +21,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark) //.light .dark nil для смены темы
 }

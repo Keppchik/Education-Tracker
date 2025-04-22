@@ -35,52 +35,46 @@ struct HomeView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack {
-                HStack {
-                    Text("Home")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
+        
+        VStack {
+            HStack {
+                Text("Home")
+                    .font(.title)
+                    .fontWeight(.bold)
                     
-                    Spacer()
+                Spacer()
                     
-                    Button(action: {
-                        print("Plus tapped")
-                    }) {
-                        Image(systemName: "plus")
-                            .font(.system(size: 30))
-                            .foregroundColor(.black)
-                    }
+                Button(action: {
+                    print("Plus tapped")
+                }) {
+                    Image(systemName: "plus")
+                        .font(.system(size: 30))
+                        .foregroundColor(.primary)
                 }
-                .padding()
-                
-                ScrollView {
-                    if !todayTasks.isEmpty {
-                        SectionView(sectionName: "TODAY", tasks: $todayTasks, sectionEnum: .today)
-                    }
-                    if !tomorrowTasks.isEmpty {
-                        SectionView(sectionName: "TOMORROW", tasks: $tomorrowTasks, sectionEnum: .tomorrow)
-                    }
-                    if !laterTasks.isEmpty {
-                        SectionView(sectionName: "LATER", tasks: $laterTasks, sectionEnum: .later)
-                    }
-                    if tasks.isEmpty {
-                        Text("You have no tasks")
-                            .font(.headline)
-                            .frame(maxHeight: .infinity, alignment: .center)
-                    }
-                    Color.clear
-                        .frame(height: 90)
-                }
-                .onAppear { updateTasks() }
-                .scrollBounceBehavior(.basedOnSize)
             }
-            .background(Color.white)
-            
-            BottomBar(selectedIndex: .house)
+            .padding()
+                
+            ScrollView {
+                if !todayTasks.isEmpty {
+                    SectionView(sectionName: "TODAY", tasks: $todayTasks, sectionEnum: .today)
+                }
+                if !tomorrowTasks.isEmpty {
+                    SectionView(sectionName: "TOMORROW", tasks: $tomorrowTasks, sectionEnum: .tomorrow)
+                }
+                if !laterTasks.isEmpty {
+                    SectionView(sectionName: "LATER", tasks: $laterTasks, sectionEnum: .later)
+                }
+                if tasks.isEmpty {
+                    Text("You have no tasks")
+                        .font(.headline)
+                        .frame(maxHeight: .infinity, alignment: .center)
+                }
+                Color.clear
+                    .frame(height: 90)
+            }
+            .onAppear { updateTasks() }
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
