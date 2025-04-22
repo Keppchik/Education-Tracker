@@ -28,7 +28,7 @@ struct BottomBar: View {
                 
                 Button { selectedIndex = .house }
                 label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "house")
                             .font(.system(size: 24))
                             .foregroundStyle(selectedIndex == .house ? Color.primary : Color.gray)
@@ -44,7 +44,7 @@ struct BottomBar: View {
                 
                 Button { selectedIndex = .tasks }
                 label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "list.bullet")
                             .font(.system(size: 24))
                             .foregroundStyle(selectedIndex == .tasks ? Color.primary : Color.gray)
@@ -55,12 +55,13 @@ struct BottomBar: View {
                             .font(.system(size: 16))
                     }
                 }
+                .padding(.horizontal, 20)
                 
                 Spacer()
                 
                 Button { selectedIndex = .settings }
                 label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "gearshape")
                             .font(.system(size: 24))
                             .foregroundStyle(selectedIndex == .settings ? Color.primary : Color.gray)
@@ -73,6 +74,7 @@ struct BottomBar: View {
                 }
                 Spacer()
             }
+            .padding(.bottom, 10)
         }
     }
 }

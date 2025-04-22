@@ -41,7 +41,6 @@ struct HomeView: View {
                 Text("Home")
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(.black)
                     
                 Spacer()
                     
@@ -50,7 +49,7 @@ struct HomeView: View {
                 }) {
                     Image(systemName: "plus")
                         .font(.system(size: 30))
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             }
             .padding()
@@ -76,7 +75,6 @@ struct HomeView: View {
             .onAppear { updateTasks() }
             .scrollBounceBehavior(.basedOnSize)
         }
-        .background(Color.white)
     }
 }
 

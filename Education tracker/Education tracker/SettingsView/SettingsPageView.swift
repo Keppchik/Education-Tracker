@@ -16,11 +16,22 @@ enum themeOptions: Int, Identifiable, CaseIterable {
     var name: String {
         switch self {
         case .light:
-                return "Light"
+            return "Light"
         case .dark:
-                return "Dark"
+            return "Dark"
         case .systemDefault:
-                return "System default"
+            return "System default"
+        }
+    }
+        
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .systemDefault:
+            return nil
+        case .light:
+            return .light
+        case .dark:
+            return .dark
         }
     }
     
@@ -29,7 +40,7 @@ enum themeOptions: Int, Identifiable, CaseIterable {
 
 struct SettingsView: View {
     @State private var isDeadlineRemindersOn = false
-    @State private var selectedTheme: themeOptions = .systemDefault
+    @AppStorage("selectedTheme") private var selectedTheme: themeOptions = .systemDefault
     @State private var showThemeOptions = false
     
     var body: some View {
@@ -43,7 +54,7 @@ struct SettingsView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .padding(.top)
-                        
+                       
                     // Theme selection
                     HStack {
                         Text("Theme")
@@ -80,7 +91,6 @@ struct SettingsView: View {
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 0.2)) {
                                     selectedTheme = index
-                                    showThemeOptions = false
                                 }
                             }
                         }
@@ -193,6 +203,9 @@ struct SettingsView: View {
                     .padding(.vertical, 12)
                 }
                 .padding(.bottom, 20)
+                
+                Color.clear
+                    .frame(height: 70)
             }
             .padding(.horizontal)
             .scrollIndicators(.hidden)

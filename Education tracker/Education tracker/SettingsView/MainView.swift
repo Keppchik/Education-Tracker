@@ -11,19 +11,21 @@ struct MainView: View {
     @State var selectedIndex: PageIndex = .house
     var body: some View {
         NavigationView {
-            VStack {
+            ZStack(alignment: .bottom) {
                 TabView(selection: $selectedIndex) {
                     HomeView()
+                        .padding(.top)
                         .tag(PageIndex.house)
                     
                     TasksPageView()
+                        .padding(.top)
                         .tag(PageIndex.tasks)
                     
                     SettingsView()
+                        .padding(.top)
                         .tag(PageIndex.settings)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                
                 
                 BottomBar(selectedIndex: $selectedIndex)
             }

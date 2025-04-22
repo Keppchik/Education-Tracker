@@ -36,7 +36,6 @@ struct SectionView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(sectionName)
                 .font(.headline)
-                .foregroundColor(.black)
                 .padding(.horizontal)
             
             ForEach($tasks.indices, id: \.self) { i in
@@ -46,7 +45,6 @@ struct SectionView: View {
             }
         }
         .padding(.vertical, 8)
-        .background(Color.white)
     }
 }
 
