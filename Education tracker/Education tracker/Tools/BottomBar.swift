@@ -15,13 +15,13 @@ enum PageIndex: Int {
 }
 
 struct BottomBar: View {
-    @State var selectedIndex: PageIndex
+    @Binding var selectedIndex: PageIndex
     var body: some View {
         ZStack {
             Rectangle()
                 .stroke(.primary, lineWidth: 1.5)
                 .fill(.background)
-                .frame(maxWidth: .infinity, maxHeight: 90)
+                .frame(maxWidth: .infinity, maxHeight: 80)
             
             HStack {
                 Spacer()
@@ -73,11 +73,10 @@ struct BottomBar: View {
                 }
                 Spacer()
             }
-            .padding(.bottom, 16)
         }
     }
 }
 
 #Preview {
-    BottomBar(selectedIndex: .tasks)
+    BottomBar(selectedIndex: .constant(.tasks))
 }
