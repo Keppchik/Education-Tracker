@@ -7,24 +7,29 @@ struct AttachmentItemView: View {
     var body: some View {
         HStack {
             Image(systemName: icon)
-                .foregroundColor(.gray)
+                .foregroundColor(.black)
+                .frame(width: 30)
+            
             Text(name)
                 .font(.subheadline)
+                .foregroundColor(.black)
+            
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
+            
+            Image(systemName: "arrow.down.circle.fill")
+                .foregroundColor(.black)
         }
         .padding()
         .background(Color(.secondarySystemGroupedBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .cornerRadius(8)
     }
 }
 
 struct AttachmentItemView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            AttachmentItemView(icon: "doc", name: "Client_briefing.pdf")
-            AttachmentItemView(icon: "folder", name: "Client_assets.zip")
+            AttachmentItemView(icon: "doc.fill", name: "Document.pdf")
+            AttachmentItemView(icon: "folder.fill", name: "Assets.zip")
         }
         .padding()
         .previewLayout(.sizeThatFits)
