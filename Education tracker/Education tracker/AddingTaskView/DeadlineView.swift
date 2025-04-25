@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct DeadlineView: View {
-    @State private var selectedDate: Date = Date()
+    @Binding var selectedDate: Date
     @State private var isShowCalendar = false
     
     private var displayText: String {
@@ -29,10 +29,10 @@ struct DeadlineView: View {
         }) {
             HStack {
                 Text("Deadline")
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 Spacer()
                 Text(displayText)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
         }
         .sheet(isPresented: $isShowCalendar) {
@@ -62,6 +62,15 @@ struct DeadlineView: View {
     }
 }
 
+
+struct PreviewWrapperDeadline: View {
+        @State private var date = Date()
+        
+        var body: some View {
+            DeadlineView(selectedDate: $date)
+        }
+    }
+
 #Preview {
-    DeadlineView()
+    PreviewWrapperDeadline()
 }

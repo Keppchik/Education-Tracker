@@ -12,10 +12,10 @@ struct AttachmentView: View {
         Button(action: {}) {
             HStack {
                 Text("Attachment")
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 Spacer()
                 Image(systemName: "paperclip")
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }
         }
     }

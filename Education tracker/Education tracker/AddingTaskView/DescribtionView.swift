@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct DescribtionView: View {
-    @State var name2: String = ""
+    @Binding var descriptionText: String
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            TextEditor(text: $name2)
+            TextEditor(text: $descriptionText)
                 .frame(minHeight: 200, maxHeight: 500)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -20,7 +20,7 @@ struct DescribtionView: View {
                 .cornerRadius(10)
                 .scrollContentBackground(.hidden)
             
-            if name2.isEmpty {
+            if descriptionText.isEmpty {
                 Text("Description")
                     .foregroundColor(Color(.placeholderText))
                     .padding(.horizontal, 21)
@@ -30,6 +30,14 @@ struct DescribtionView: View {
     }
 }
 
+struct PreviewWrapperDescribtion: View {
+        @State private var text = ""
+        
+        var body: some View {
+            DescribtionView(descriptionText: $text)
+        }
+    }
+
 #Preview {
-    DescribtionView()
+    PreviewWrapperDescribtion()
 }

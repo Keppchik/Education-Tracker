@@ -8,13 +8,13 @@
 import SwiftUI
 
 enum StatusOptions:  Int, Identifiable, CaseIterable {
-    case Todo
+    case ToDo
     case InProgress
     case Done
     
     var name: String {
         switch self {
-            case .Todo:
+            case .ToDo:
             return "To do"
         case .InProgress:
             return "In progress"
@@ -28,7 +28,7 @@ enum StatusOptions:  Int, Identifiable, CaseIterable {
 }
 
 struct StatusView: View {
-    @State var selectedStatus: StatusOptions = .Todo
+    @Binding var selectedStatus: StatusOptions
     @State var showStatus: Bool = false
     var body: some View {
         VStack {
@@ -70,7 +70,14 @@ struct StatusView: View {
     }
 }
 
+struct PreviewWrapperStatus: View {
+    @State private var selectedStatus: StatusOptions = .ToDo
+    
+    var body: some View {
+        StatusView( selectedStatus: $selectedStatus)
+    }
+}
 
 #Preview {
-    StatusView()
+    PreviewWrapperStatus()
 }
