@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TaskDetailsView: View {
+    let taskName: String
     @State private var currentScore = 85
     @State private var showingScoreEditor = false
     @State private var showingAttachmentAlert = false
@@ -11,7 +12,7 @@ struct TaskDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Client Feedback Session")
+                    Text(taskName)
                         .font(.title2)
                         .fontWeight(.semibold)
                     
@@ -205,7 +206,7 @@ struct ScoreEditorView: View {
 struct TaskDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TaskDetailsView()
+            TaskDetailsView(taskName: "Client Feedback Session")
         }
     }
 }
