@@ -45,7 +45,7 @@ struct ListRow: View {
         
         ForEach(Array(items.enumerated()), id: \.element) { index, item in
             if isExpanded {
-                NavigationLink { TaskDetailsView(taskName: item.title, currentScore: item.score, maxScore: item.maxScore, taskType: item.type, taskDeadline: item.date, taskStatus: item.status) } 
+                NavigationLink { TaskDetailsView(taskName: item.title, currentScore: item.score, maxScore: item.maxScore, taskType: item.type, taskDeadline: item.date, taskStatus: item.status, taskDescription: item.description) } 
                 label: {
                     HStack {
                         Image(systemName: "circle.fill")
@@ -76,29 +76,29 @@ struct ListRow: View {
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             )
         ]))
 }

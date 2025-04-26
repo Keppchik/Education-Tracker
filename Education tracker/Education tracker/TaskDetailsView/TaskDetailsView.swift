@@ -4,9 +4,10 @@ struct TaskDetailsView: View {
     @State var taskName: String
     @State var currentScore: Int
     @State var maxScore: Int
-    @State var taskType: String
+    @State var taskType: TypeOptions
     @State var taskDeadline: Date
-    @State var taskStatus: String
+    @State var taskStatus: StatusOptions
+    @State var taskDescription: String
     
     @State private var showingAttachmentAlert = false
     @State private var selectedAttachment = ""
@@ -33,11 +34,11 @@ struct TaskDetailsView: View {
                         .foregroundColor(.primary)
                         .padding(.vertical, 20)
                         
-                    DetailItemView(title: "Current status:", value: isMarkedDone ? "Completed" : "In progress")
+                    DetailItemView(title: "Current status:", value: taskStatus.name)
                         
                     Divider()
                         
-                    DetailItemView(title: "Type", value: taskType)
+                    DetailItemView(title: "Type", value: taskType.name)
                         
                     Divider()
                         
@@ -67,6 +68,18 @@ struct TaskDetailsView: View {
                             AttachmentItemView(icon: "folder.fill", name: "Client_assets.zip")
                         }
                     }
+                    
+                    Text("Description")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                        .padding(.top)
+                    
+                    
+                    Text(taskDescription.isEmpty ? "No description provided" : taskDescription)
+                        .font(.system(size: 16))
+                        .fontWeight(.medium)
+                        .foregroundColor(.primary)
+                        
                 }
                 .padding()
             }
@@ -87,7 +100,7 @@ struct TaskDetailsView: View {
             .padding(.bottom, 8)
             
             Button(action: {
-                
+                presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Done")
                     .font(.headline)
@@ -104,9 +117,9 @@ struct TaskDetailsView: View {
         .navigationTitle("Task Details")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
-            trailing: Button(action: {
-                
-            }) {
+            trailing: NavigationLink {
+                AddingTaskPageView(isEdit: true, name: taskName, selectedType: taskType, selectedStatus: taskStatus, deadline: taskDeadline, currentScore: currentScore, maxScore: maxScore, description: taskDescription)
+            } label: {
                 Image(systemName: "pencil")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.primary)
@@ -127,7 +140,7 @@ struct TaskDetailsView: View {
 struct TaskDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TaskDetailsView(taskName: "Client Feedback Session", currentScore: 80, maxScore: 100, taskType: "Type", taskDeadline: Date(), taskStatus: "Status")
+            TaskDetailsView(taskName: "Client Feedback Session", currentScore: 80, maxScore: 100, taskType: .Meeting, taskDeadline: Date(), taskStatus: .ToDo, taskDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
         }
     }
 }

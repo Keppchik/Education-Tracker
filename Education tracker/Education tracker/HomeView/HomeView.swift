@@ -6,36 +6,36 @@ struct HomeView: View {
             title: "Team meeting",
             date: Date(),
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         ),
         TaskItem(
             title: "Team meeting",
             date: Date(),
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         ),
         TaskItem(
             title: "Client presentation",
             date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!,
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         ),
         TaskItem(
             title: "Project deadline",
             date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!,
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         ),
         TaskItem(
             title: "Quarterly review",
             date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!,
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         )
     ]
     

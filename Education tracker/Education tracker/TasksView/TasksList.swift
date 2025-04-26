@@ -38,29 +38,29 @@ struct TasksList: View {
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             )
         ]),
         MyListModel(name: "Name2", items: [
@@ -68,29 +68,29 @@ struct TasksList: View {
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             )
         ]),
         MyListModel(name: "Name7", items: [
@@ -98,29 +98,29 @@ struct TasksList: View {
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             )
         ]),
         MyListModel(name: "Name8", items: [
@@ -128,29 +128,29 @@ struct TasksList: View {
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             ),
             TaskItem(
                 title: "Team meeting",
                 date: Date(),
                 score: 0,
-                status: "ToDo",
-                type: "Type"
+                status: .ToDo,
+                type: .Remind
             )
         ])]))
 }
