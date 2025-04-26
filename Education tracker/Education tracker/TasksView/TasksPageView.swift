@@ -102,6 +102,7 @@ struct TasksPageView: View {
                         }
                     }
             }
+            .presentationDetents([.fraction(0.3)])
             .padding(.top, 32)
             
             Divider()

@@ -126,7 +126,7 @@ struct SettingsView: View {
                     Button(action: {}) {
                         HStack {
                             Text("Export")
-                                .foregroundColor(.black)
+                                .foregroundColor(.primary)
                             Spacer()
                             Text("CSV")
                                 .foregroundColor(.gray)
@@ -140,7 +140,7 @@ struct SettingsView: View {
                     Button(action: {}) {
                         HStack {
                             Text("Export")
-                                .foregroundColor(.black)
+                                .foregroundColor(.primary)
                             Spacer()
                             Text("PDF")
                                 .foregroundColor(.gray)
@@ -148,7 +148,6 @@ struct SettingsView: View {
                     }
                     .padding(.vertical, 15)
                     .contentShape(Rectangle())
-                    .onTapGesture {}
                 }
                 .padding(.bottom, 20)
                 .padding(.top, 15)
@@ -168,9 +167,11 @@ struct SettingsView: View {
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.gray)
                         }
+                        .foregroundColor(.primary)
                         .padding(.bottom, 10)
                         .contentShape(Rectangle())
                     }
+                    
                     .buttonStyle(PlainButtonStyle())
                 }
                 .padding(.bottom, 20)
