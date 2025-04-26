@@ -54,8 +54,8 @@ struct TaskRow: View {
             title: "Team meeting",
             date: Date(),
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         )
     ),sectionEnum: .today, onDelete: {})
 }

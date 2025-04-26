@@ -14,9 +14,9 @@ struct TaskItem: Hashable {
     var isDone: Bool = false
     var score: Int
     var maxScore: Int = 100
-    var status: String
-    var type: String
-    var description: String?
+    var status: StatusOptions
+    var type: TypeOptions
+    var description: String = ""
 }
 
 func formatDateHourMin(_ date: Date, locale: String = "en_US") -> String {

@@ -22,6 +22,7 @@ struct AddingTaskPageView: View {
     
     @State private var showNameError = false
     @State private var showMaxScoreError = false
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
@@ -39,11 +40,9 @@ struct AddingTaskPageView: View {
                                 .foregroundColor(.red)
                                 .font(.caption)
                                 .padding(.leading, 8)
-                                
                         }
                     }
                     .padding(.bottom)
-                
                 
                 //===== Type =====
                 TypeTask(selectedType: $selectedType)
@@ -78,11 +77,12 @@ struct AddingTaskPageView: View {
         
         Button(action: {  //TODO: добавить полноценный функционал кнопки, с схохранением и созданием таска
             guard !name.isEmpty else { showNameError = true; return }
-            guard maxScore > currentScore else { showMaxScoreError = true; return }
+            guard maxScore >= currentScore else { showMaxScoreError = true; return }
             if isEdit {
-                
+                presentationMode.wrappedValue.dismiss()
             } else {
-                let newTask = TaskItem(title: name, date: deadline, score: currentScore, maxScore: maxScore, status: selectedStatus.name, type: selectedType.name, description: description)
+                let newTask = TaskItem(title: name, date: deadline, score: currentScore, maxScore: maxScore, status: selectedStatus, type: selectedType, description: description)
+                presentationMode.wrappedValue.dismiss()
             }
         }) {
         Text(isEdit ? "Update" : "Save")

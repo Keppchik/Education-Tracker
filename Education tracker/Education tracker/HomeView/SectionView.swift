@@ -39,9 +39,14 @@ struct SectionView: View {
                 .padding(.horizontal)
             
             ForEach($tasks.indices, id: \.self) { i in
-                TaskRow(task: $tasks[i], sectionEnum: sectionEnum, onDelete: {
-                    tasksDeletion(index: i)
-                })
+                NavigationLink {
+                    TaskDetailsView(taskName: tasks[i].title, currentScore: tasks[i].score, maxScore: tasks[i].maxScore, taskType: tasks[i].type, taskDeadline: tasks[i].date, taskStatus: tasks[i].status, taskDescription: tasks[i].description)
+                }
+                label: {
+                    TaskRow(task: $tasks[i], sectionEnum: sectionEnum, onDelete: {
+                        tasksDeletion(index: i)
+                    })
+                }
             }
         }
         .padding(.vertical, 8)
@@ -56,15 +61,15 @@ struct SectionView: View {
             title: "Team meeting",
             date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         ),
         TaskItem(
             title: "Team meeting",
             date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
             score: 0,
-            status: "ToDo",
-            type: "Type"
+            status: .ToDo,
+            type: .Remind
         )
     ]), sectionEnum: .today)
 }
