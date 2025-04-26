@@ -21,9 +21,8 @@ struct TasksList: View {
                     ListRow(name: list.name, items: list.items)
                         .animation(.default, value: 0)
                 }
-                    
                 Color.clear
-                    .frame(height: 90)
+                    .frame(height: 80)
             }
             .scrollIndicators(.hidden)
         }
