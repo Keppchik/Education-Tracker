@@ -25,14 +25,16 @@ struct TasksPageView: View {
         MyListModel(name: "Name6", items: ["Item1", "Item2", "Item3"])]
         //TODO: Добавить брать из Core Data
     
+    @State private var showAddTaskView = false
+    
     var body: some View {
         VStack {
             Menu {
-                Button(action: { newListSheet = true } ) {
+                Button(action: { newListSheet = true }) {
                     Label("Create new list", systemImage: "list.bullet")
                 }
-
-                Button(action: {}) {
+                
+                Button(action: { showAddTaskView = true }) {
                     Label("Create new task", systemImage: "square.and.pencil")
                 }
             } label: {
@@ -43,6 +45,9 @@ struct TasksPageView: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.trailing, 32)
             .padding(.vertical, 8)
+            .background(
+                NavigationLink(destination: AddingTaskPageView(), isActive: $showAddTaskView) {}
+            )
             
             Text("Tasks")
                 .font(.system(size: 32, weight: .bold))

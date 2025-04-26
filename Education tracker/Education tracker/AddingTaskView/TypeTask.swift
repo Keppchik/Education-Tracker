@@ -7,30 +7,6 @@
 
 import SwiftUI
 
-enum TypeOptions: Int, Identifiable, CaseIterable{
-    case ToDo
-    case Meeting
-    case Remind
-    case Learn
-        
-    var name: String{
-        switch self {
-            case .ToDo:
-            return "To Do"
-        case .Meeting:
-            return "Meeting"
-        case .Remind:
-            return "Remind"
-        case .Learn:
-            return "Learn"
-        
-        }
-    }
-    var id: Int{
-        rawValue
-    }
-}
-
 struct TypeTask: View {
     @Binding var selectedType: TypeOptions
     @State var ShowType: Bool = false

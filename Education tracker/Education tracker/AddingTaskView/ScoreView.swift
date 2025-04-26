@@ -10,38 +10,38 @@ import SwiftUI
 struct ScoreView: View {
     @Binding var currentScore: Int
     @Binding var maxScore: Int
+    @Binding var showMaxScoreError: Bool
     
     var body: some View {
-        HStack {
-            Text("Score:")
-            Spacer()
+        VStack(alignment: .trailing) {
+            HStack {
+                Text("Score:")
+                Spacer()
+                
+                TextField("", value: $currentScore, formatter: NumberFormatter())
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 55)
+                    .multilineTextAlignment(.center)
+                    .keyboardType(.numberPad)
+                
+                Text("/")
+                
+                TextField("", value: $maxScore, formatter: NumberFormatter())
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 55)
+                    .multilineTextAlignment(.center)
+                    .keyboardType(.numberPad)
+            }
             
-            TextField("", value: $currentScore, formatter: NumberFormatter())
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 55)
-                .multilineTextAlignment(.center)
-                .keyboardType(.numberPad)
-            
-            Text("/")
-            
-            TextField("", value: $maxScore, formatter: NumberFormatter())
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 55)
-                .multilineTextAlignment(.center)
-                .keyboardType(.numberPad)
+            if showMaxScoreError && maxScore < currentScore {
+                Text("Max score cannot be less then score")
+                    .foregroundColor(.red)
+                    .font(.caption)
+            }
         }
     }
 }
 
-struct PreviewWrapperScore: View {
-    @State var current = 80
-    @State var max = 100
-    
-    var body: some View {
-        ScoreView(currentScore: $current, maxScore: $max)
-    }
-}
-
 #Preview {
-    PreviewWrapperScore()
+    ScoreView(currentScore: .constant(80), maxScore: .constant(10), showMaxScoreError: .constant(true))
 }

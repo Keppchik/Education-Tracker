@@ -40,8 +40,7 @@ struct DeadlineView: View {
                 DatePicker(
                     "Select deadline",
                     selection: $selectedDate,
-                    in: Date()...,
-                    displayedComponents: .date
+                    displayedComponents: [.date]
                 )
                 .datePickerStyle(.graphical)
                 .navigationTitle("Select Date")

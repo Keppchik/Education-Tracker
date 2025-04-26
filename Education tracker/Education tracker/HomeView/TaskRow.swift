@@ -52,7 +52,10 @@ struct TaskRow: View {
     TaskRow(task: .constant(
         TaskItem(
             title: "Team meeting",
-            date: Date()
+            date: Date(),
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         )
     ),sectionEnum: .today, onDelete: {})
 }

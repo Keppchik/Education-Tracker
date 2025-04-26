@@ -9,19 +9,19 @@ import SwiftUI
 
 
 struct AddingTaskPageView: View {
-    
-    @State private var isEdit = false
+    @State var isEdit = false
     
     //переменные для дочерних элементов
     @State var name: String = ""
     @State var selectedType: TypeOptions = .ToDo
     @State var selectedStatus: StatusOptions = .ToDo
     @State var deadline: Date = Date()
-    @State var currentScore: Int = 80
-    @State var maxScore: Int = 100
+    @State var currentScore: Int = 0
+    @State var maxScore: Int = 0
     @State var description: String = ""
-    @State var showNameError = false
     
+    @State private var showNameError = false
+    @State private var showMaxScoreError = false
     
     var body: some View {
         NavigationView {
@@ -62,7 +62,7 @@ struct AddingTaskPageView: View {
                     .padding(.vertical)
                 
                 //===== Score =====
-                ScoreView(currentScore: $currentScore, maxScore: $maxScore)
+                ScoreView(currentScore: $currentScore, maxScore: $maxScore, showMaxScoreError: $showMaxScoreError)
                     .padding(.vertical)
                 
                 //===== Notes/Describtion =====
@@ -72,28 +72,29 @@ struct AddingTaskPageView: View {
             }
             .padding(.horizontal)
             .padding(.vertical)
-            .navigationTitle(Text("Task"))
-            .navigationBarTitleDisplayMode(.inline)
             .scrollIndicators(.hidden)
         }
-        Button(action: {
-                    if name.isEmpty {
-                        showNameError = true
-                    } else {
-                        //TODO: добавить полноценный функционал кнопки, с схохранением и созданием таска
-                        
-                    }
-                }) {
-                Text(isEdit ? "Update" : "Save")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
+        .navigationTitle("New Task")
+        
+        Button(action: {  //TODO: добавить полноценный функционал кнопки, с схохранением и созданием таска
+            guard !name.isEmpty else { showNameError = true; return }
+            guard maxScore > currentScore else { showMaxScoreError = true; return }
+            if isEdit {
+                
+            } else {
+                let newTask = TaskItem(title: name, date: deadline, score: currentScore, maxScore: maxScore, status: selectedStatus.name, type: selectedType.name, description: description)
             }
-            .padding(.horizontal)
-            .padding(.bottom, 10)
+        }) {
+        Text(isEdit ? "Update" : "Save")
+            .font(.headline)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.blue)
+            .cornerRadius(10)
+        }
+        .padding(.horizontal)
+        .padding(.bottom, 10)
     }
 }
 
@@ -104,13 +105,13 @@ struct AddingTaskPageView: View {
 
 #Preview {
     AddingTaskPageView(
+        isEdit: true,
         name: "Test",
         selectedType: .Learn,
         selectedStatus: .InProgress,
         deadline: Date(),
         currentScore: 10,
         maxScore: 10,
-        description: "testing",
-        showNameError: false
+        description: "testing"
     )
 }

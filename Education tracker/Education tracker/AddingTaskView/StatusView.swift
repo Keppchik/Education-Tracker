@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-enum StatusOptions:  Int, Identifiable, CaseIterable {
-    case ToDo
-    case InProgress
-    case Done
-    
-    var name: String {
-        switch self {
-            case .ToDo:
-            return "To do"
-        case .InProgress:
-            return "In progress"
-        case .Done:
-            return "Done"
-        }
-    }
-    var id: Int {
-        rawValue
-    }
-}
-
 struct StatusView: View {
     @Binding var selectedStatus: StatusOptions
     @State var showStatus: Bool = false
