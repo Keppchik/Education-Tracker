@@ -33,12 +33,124 @@ struct TasksList: View {
 
 #Preview {
     TasksList(myLists: .constant([
-        MyListModel(name: "Name1", items: ["Item1", "Item2", "Item3", "Items4", "Items5"]),
-        MyListModel(name: "Name2", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name3", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name4", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name5", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name6", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name7", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name8", items: ["Item1", "Item2", "Item3"])]))
+        MyListModel(name: "Name1", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]),
+        MyListModel(name: "Name2", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]),
+        MyListModel(name: "Name7", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]),
+        MyListModel(name: "Name8", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ])]))
 }

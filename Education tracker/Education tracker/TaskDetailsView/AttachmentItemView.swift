@@ -7,20 +7,19 @@ struct AttachmentItemView: View {
     var body: some View {
         HStack {
             Image(systemName: icon)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .frame(width: 30)
             
             Text(name)
                 .font(.subheadline)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
             
             Spacer()
             
             Image(systemName: "arrow.down.circle.fill")
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
         }
-        .padding()
-        .background(Color(.secondarySystemGroupedBackground))
+        .padding(.vertical, 6)
         .cornerRadius(8)
     }
 }

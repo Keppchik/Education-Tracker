@@ -7,11 +7,15 @@
 
 import Foundation
 
-struct TaskItem {
+struct TaskItem: Hashable {
     var id = UUID()
     var title: String
     var date: Date
     var isDone: Bool = false
+    var score: Int
+    var maxScore: Int = 100
+    var status: String
+    var type: String
 }
 
 func formatDateHourMin(_ date: Date, locale: String = "en_US") -> String {

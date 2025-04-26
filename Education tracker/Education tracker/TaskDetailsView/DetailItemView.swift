@@ -7,15 +7,15 @@ struct DetailItemView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.subheadline)
+                .font(.system(size: 16))
                 .foregroundColor(.gray)
             
             Spacer()
             
             Text(value)
-                .font(.subheadline)
+                .font(.system(size: 16))
                 .fontWeight(.medium)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
         }
         .padding(.vertical, 8)
     }

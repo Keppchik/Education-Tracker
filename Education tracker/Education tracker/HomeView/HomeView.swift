@@ -4,23 +4,38 @@ struct HomeView: View {
     @State private var tasks: [TaskItem] = [
         TaskItem(
             title: "Team meeting",
-            date: Date()
+            date: Date(),
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         ),
         TaskItem(
             title: "Team meeting",
-            date: Date()
+            date: Date(),
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         ),
         TaskItem(
             title: "Client presentation",
-            date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!
+            date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!,
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         ),
         TaskItem(
             title: "Project deadline",
-            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!
+            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!,
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         ),
         TaskItem(
             title: "Quarterly review",
-            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!
+            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!,
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         )
     ]
     

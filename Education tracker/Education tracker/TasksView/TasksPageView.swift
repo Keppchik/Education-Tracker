@@ -10,19 +10,104 @@ import SwiftUI
 struct MyListModel: Hashable {
     let id: UUID = UUID()
     var name: String
-    var items: [String]
+    var items: [TaskItem]
 }
 
 struct TasksPageView: View {
     @State private var newListSheet = false
     @State private var newListName: String = ""
     @State private var myLists: [MyListModel] = [
-        MyListModel(name: "Name1", items: ["Item1", "Item2", "Item3", "Items4", "Items5"]),
-        MyListModel(name: "Name2", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name3", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name4", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name5", items: ["Item1", "Item2", "Item3"]),
-        MyListModel(name: "Name6", items: ["Item1", "Item2", "Item3"])]
+        MyListModel(name: "Name1", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]),
+        MyListModel(name: "Name2", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]),
+        MyListModel(name: "Name3", items: [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]),
+    ]
         //TODO: Добавить брать из Core Data
     
     var body: some View {

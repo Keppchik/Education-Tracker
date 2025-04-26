@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListRow: View {
     @Binding var name: String
-    @Binding var items: [String]
+    @Binding var items: [TaskItem]
     @State var isExpanded = false
     @Environment(\.colorScheme) private var colorScheme
     
@@ -45,13 +45,13 @@ struct ListRow: View {
         
         ForEach(Array(items.enumerated()), id: \.element) { index, item in
             if isExpanded {
-                Button { }  //TODO: Добавить переход на экран задачи
+                NavigationLink { TaskDetailsView(taskName: item.title, currentScore: item.score, maxScore: item.maxScore, taskType: item.type, taskDeadline: item.date, taskStatus: item.status) } 
                 label: {
                     HStack {
                         Image(systemName: "circle.fill")
                             .font(.system(size: 8))
                         
-                        Text(item)
+                        Text(item.title)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.primary)
@@ -71,5 +71,34 @@ struct ListRow: View {
 
 #Preview {
     ListRow(name: .constant("List name"), items: .constant(
-        ["Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9", "Item10"]))
+        [
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            ),
+            TaskItem(
+                title: "Team meeting",
+                date: Date(),
+                score: 0,
+                status: "ToDo",
+                type: "Type"
+            )
+        ]))
 }
