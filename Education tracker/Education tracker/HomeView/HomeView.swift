@@ -59,9 +59,9 @@ struct HomeView: View {
                     
                 Spacer()
                     
-                Button(action: {
-                    print("Plus tapped")
-                }) {
+                NavigationLink {
+                    AddingTaskPageView()
+                } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 30))
                         .foregroundColor(.primary)

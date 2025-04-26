@@ -21,5 +21,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .preferredColorScheme(.dark) //.light .dark nil для смены темы
+        .preferredColorScheme(nil) //.light .dark nil для смены темы
 }
