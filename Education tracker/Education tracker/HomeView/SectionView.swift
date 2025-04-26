@@ -54,11 +54,17 @@ struct SectionView: View {
     SectionView(sectionName: "Test", tasks: .constant([
         TaskItem(
             title: "Team meeting",
-            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!
+            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         ),
         TaskItem(
             title: "Team meeting",
-            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!
+            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
+            score: 0,
+            status: "ToDo",
+            type: "Type"
         )
     ]), sectionEnum: .today)
 }
