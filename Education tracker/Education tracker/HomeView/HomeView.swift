@@ -1,56 +1,25 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var tasks: [TaskItem] = [
-        TaskItem(
-            title: "Team meeting",
-            date: Date(),
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        ),
-        TaskItem(
-            title: "Team meeting",
-            date: Date(),
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        ),
-        TaskItem(
-            title: "Client presentation",
-            date: Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date().advanced(by: 86400))!,
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        ),
-        TaskItem(
-            title: "Project deadline",
-            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 7))!,
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        ),
-        TaskItem(
-            title: "Quarterly review",
-            date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date().advanced(by: 86400 * 30))!,
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        )
-    ]
+    @EnvironmentObject var modelData: ModelData
+    @State private var tasks: [ClassTask]
+    init() {
+        _tasks = State(initialValue: [])
+    }
     
-    @State private var todayTasks: [TaskItem] = []
-    @State private var tomorrowTasks: [TaskItem] = []
-    @State private var laterTasks: [TaskItem] = []
+    @State private var todayTasks: [ClassTask] = []
+    @State private var tomorrowTasks: [ClassTask] = []
+    @State private var laterTasks: [ClassTask] = []
     
     private func updateTasks() {
-        todayTasks = tasks.filter { Calendar.current.isDateInToday($0.date) }
-        tomorrowTasks = tasks.filter { Calendar.current.isDateInTomorrow($0.date) }
-        laterTasks = tasks.filter { !Calendar.current.isDateInToday($0.date) && !Calendar.current.isDateInTomorrow($0.date) }
+        tasks = modelData.allTasks
+        let filteredTasks = tasks.filter { !$0.isDone }
+        todayTasks = filteredTasks.filter { Calendar.current.isDateInToday($0.date) }
+        tomorrowTasks = filteredTasks.filter { Calendar.current.isDateInTomorrow($0.date) }
+        laterTasks = filteredTasks.filter { !Calendar.current.isDateInToday($0.date) && !Calendar.current.isDateInTomorrow($0.date) }
     }
     
     var body: some View {
-        
         VStack {
             HStack {
                 Text("Home")
@@ -61,6 +30,7 @@ struct HomeView: View {
                     
                 NavigationLink {
                     AddingTaskPageView()
+                        .environmentObject(modelData)
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 30))
@@ -71,15 +41,18 @@ struct HomeView: View {
                 
             ScrollView {
                 if !todayTasks.isEmpty {
-                    SectionView(sectionName: "TODAY", tasks: $todayTasks, sectionEnum: .today)
+                    SectionView(sectionName: "TODAY", tasks: todayTasks, sectionEnum: .today, updateTasks: updateTasks)
+                        .environmentObject(modelData)
                 }
                 if !tomorrowTasks.isEmpty {
-                    SectionView(sectionName: "TOMORROW", tasks: $tomorrowTasks, sectionEnum: .tomorrow)
+                    SectionView(sectionName: "TOMORROW", tasks: tomorrowTasks, sectionEnum: .tomorrow, updateTasks: updateTasks)
+                        .environmentObject(modelData)
                 }
                 if !laterTasks.isEmpty {
-                    SectionView(sectionName: "LATER", tasks: $laterTasks, sectionEnum: .later)
+                    SectionView(sectionName: "LATER", tasks: laterTasks, sectionEnum: .later, updateTasks: updateTasks)
+                        .environmentObject(modelData)
                 }
-                if tasks.isEmpty {
+                if tasks.filter({ !$0.isDone }).isEmpty {
                     Text("You have no tasks")
                         .font(.headline)
                         .frame(maxHeight: .infinity, alignment: .center)
@@ -87,7 +60,9 @@ struct HomeView: View {
                 Color.clear
                     .frame(height: 90)
             }
-            .onAppear { updateTasks() }
+            .onAppear {
+                updateTasks()
+            }
             .scrollBounceBehavior(.basedOnSize)
         }
     }
@@ -95,4 +70,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(ModelData())
 }

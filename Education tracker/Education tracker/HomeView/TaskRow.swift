@@ -9,23 +9,24 @@ import SwiftUI
 
 struct TaskRow: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var task: TaskItem
+    @State var task: ClassTask
+    @State private var isTapped: Bool = false
     var sectionEnum: SectionEnum
-    var onDelete: () -> Void
+    var onTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Image(systemName: task.isDone ? "checkmark.circle.fill" : "circle")
+                Image(systemName: isTapped ? "checkmark.circle.fill" : "circle")
                     .font(.title3)
                     .onTapGesture {
-                        task.isDone.toggle()
-                        onDelete()
+                        onTap()
+                        isTapped.toggle()
                     }
                 
                 Text(task.title)
                     .font(.subheadline)
-                    .foregroundColor(task.isDone ? .gray : .primary)
+                    .foregroundColor(isTapped ? .gray : .primary)
                 
                 Spacer()
             }
@@ -49,13 +50,22 @@ struct TaskRow: View {
 }
 
 #Preview {
-    TaskRow(task: .constant(
-        TaskItem(
-            title: "Team meeting",
-            date: Date(),
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        )
-    ),sectionEnum: .today, onDelete: {})
+    let context = CoreDataManager.shared.context
+    
+    let task1 = ClassTask(context: context)
+    task1.id = UUID()
+    task1.title = "Test Task 1"
+    task1.date = Date()
+    task1.type = TypeOptions.ToDo.rawValue
+    task1.status = StatusOptions.ToDo.rawValue
+    task1.score = 0
+    task1.maxScore = 10
+    task1.taskDescription = "Test description 1"
+    task1.isDone = false
+    
+    return NavigationView {
+        TaskRow(task: task1, sectionEnum: .today, onTap: {})
+            .environmentObject(ModelData())
+            .environment(\.managedObjectContext, context)
+    }
 }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ScoreView: View {
-    @Binding var currentScore: Int
-    @Binding var maxScore: Int
+    @Binding var currentScore: Int16
+    @Binding var maxScore: Int16
     @Binding var showMaxScoreError: Bool
     
     var body: some View {

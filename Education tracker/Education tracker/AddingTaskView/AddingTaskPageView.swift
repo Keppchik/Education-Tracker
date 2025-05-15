@@ -9,15 +9,18 @@ import SwiftUI
 
 
 struct AddingTaskPageView: View {
+    @EnvironmentObject var modelData: ModelData
+    
     @State var isEdit = false
+    @State var task: ClassTask? = nil
     
     //переменные для дочерних элементов
     @State var name: String = ""
     @State var selectedType: TypeOptions = .ToDo
     @State var selectedStatus: StatusOptions = .ToDo
     @State var deadline: Date = Date()
-    @State var currentScore: Int = 0
-    @State var maxScore: Int = 0
+    @State var currentScore: Int16 = 0
+    @State var maxScore: Int16 = 0
     @State var description: String = ""
     
     @State private var showNameError = false
@@ -73,15 +76,47 @@ struct AddingTaskPageView: View {
             .padding(.vertical)
             .scrollIndicators(.hidden)
         }
+        .onAppear {
+            if let task = task {
+                name = task.title
+                selectedType = TypeOptions(rawValue: task.type)!
+                selectedStatus = StatusOptions(rawValue: task.status)!
+                deadline = task.date
+                currentScore = task.score
+                maxScore = task.maxScore
+                description = task.taskDescription
+            }
+        }
         .navigationTitle("New Task")
         
-        Button(action: {  //TODO: добавить полноценный функционал кнопки, с схохранением и созданием таска
+        Button(action: {
             guard !name.isEmpty else { showNameError = true; return }
             guard maxScore >= currentScore else { showMaxScoreError = true; return }
             if isEdit {
+                modelData.updateTask(
+                    task!,
+                    newTitle: name,
+                    isDone: selectedStatus == .Done ? true : false,
+                    newDate: deadline,
+                    newStatus: selectedStatus,
+                    newDescription: description,
+                    newType: selectedType,
+                    newScore: currentScore,
+                    newMaxScore: maxScore
+                )
+                
                 presentationMode.wrappedValue.dismiss()
             } else {
-                let newTask = TaskItem(title: name, date: deadline, score: currentScore, maxScore: maxScore, status: selectedStatus, type: selectedType, description: description)
+                modelData.createTask(
+                    title: name,
+                    date: deadline,
+                    description: description,
+                    type: selectedType,
+                    status: selectedStatus,
+                    score: currentScore,
+                    maxScore: maxScore,
+                    isDone: selectedStatus == .Done ? true : false
+                )
                 presentationMode.wrappedValue.dismiss()
             }
         }) {
@@ -101,6 +136,7 @@ struct AddingTaskPageView: View {
 
 #Preview {
     AddingTaskPageView()
+        .environmentObject(ModelData())
 }
 
 #Preview {
@@ -114,4 +150,5 @@ struct AddingTaskPageView: View {
         maxScore: 10,
         description: "testing"
     )
+    .environmentObject(ModelData())
 }

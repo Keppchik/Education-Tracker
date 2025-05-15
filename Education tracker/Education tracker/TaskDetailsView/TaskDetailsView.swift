@@ -1,18 +1,19 @@
 import SwiftUI
 
 struct TaskDetailsView: View {
-    @State var taskName: String
-    @State var currentScore: Int
-    @State var maxScore: Int
-    @State var taskType: TypeOptions
-    @State var taskDeadline: Date
-    @State var taskStatus: StatusOptions
-    @State var taskDescription: String
+    @State var task: ClassTask
+    @State var editingScore: Int16 = 0
+    
+    init(task: ClassTask) {
+        self.task = task
+        self._editingScore = State(initialValue: task.score)
+    }
     
     @State private var showingAttachmentAlert = false
     @State private var selectedAttachment = ""
     @State private var isMarkedDone = false
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var modelData: ModelData
     
     @State private var editScore = false
     
@@ -21,24 +22,24 @@ struct TaskDetailsView: View {
     var formattedDeadline: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
-        return formatter.string(from: taskDeadline)
+        return formatter.string(from: task.date)
     }
     
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Task: \(taskName)")
+                    Text("Task: \(task.title)")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
                         .padding(.vertical, 20)
                         
-                    DetailItemView(title: "Current status:", value: taskStatus.name)
+                    DetailItemView(title: "Current status:", value: StatusOptions(rawValue: task.status)!.name)
                         
                     Divider()
                         
-                    DetailItemView(title: "Type", value: taskType.name)
+                    DetailItemView(title: "Type", value: TypeOptions(rawValue: task.type)!.name)
                         
                     Divider()
                         
@@ -46,7 +47,7 @@ struct TaskDetailsView: View {
                         
                     Divider()
                         
-                    DetailItemView(title: "Score", value: "\(currentScore)/\(maxScore)")
+                    DetailItemView(title: "Score", value: "\(task.score)/\(task.maxScore)")
                         .padding(.bottom, 20)
                         
                     Text("Attachments")
@@ -75,7 +76,7 @@ struct TaskDetailsView: View {
                         .padding(.top)
                     
                     
-                    Text(taskDescription.isEmpty ? "No description provided" : taskDescription)
+                    Text(task.taskDescription.isEmpty ? "No description provided" : task.taskDescription)
                         .font(.system(size: 16))
                         .fontWeight(.medium)
                         .foregroundColor(.primary)
@@ -118,7 +119,8 @@ struct TaskDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
             trailing: NavigationLink {
-                AddingTaskPageView(isEdit: true, name: taskName, selectedType: taskType, selectedStatus: taskStatus, deadline: taskDeadline, currentScore: currentScore, maxScore: maxScore, description: taskDescription)
+                AddingTaskPageView(isEdit: true, task: task)
+                    .environmentObject(modelData)
             } label: {
                 Image(systemName: "pencil")
                     .font(.system(size: 20, weight: .bold))
@@ -127,7 +129,29 @@ struct TaskDetailsView: View {
             }
         )
         .sheet(isPresented: $editScore) {
-            ScoreEditorView(score: $currentScore)
+            NavigationView {
+                Form {
+                    Section {
+                        Stepper(value: $editingScore, in: 0...task.maxScore) {
+                            Text("Score: \(editingScore)/\(task.maxScore)")
+                        }
+                        .onChange(of: editingScore) {
+                            modelData.updateTask(task, newScore: editingScore)
+                        }
+                    }
+                }
+                .navigationTitle("Edit Score")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                            modelData.updateTask(task, newScore: editingScore)
+                            editScore = false
+                        }
+                    }
+                }
+            }
+            .presentationDetents([.fraction(0.2)])
         }
         .alert("Attachment Selected", isPresented: $showingAttachmentAlert) {
             Button("OK", role: .cancel) {}
@@ -138,9 +162,23 @@ struct TaskDetailsView: View {
 }
 
 struct TaskDetailsView_Previews: PreviewProvider {
+    static let context = CoreDataManager.shared.context
+    
     static var previews: some View {
-        NavigationView {
-            TaskDetailsView(taskName: "Client Feedback Session", currentScore: 80, maxScore: 100, taskType: .Meeting, taskDeadline: Date(), taskStatus: .ToDo, taskDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+        let mockTask = ClassTask(context: context)
+        mockTask.id = UUID()
+        mockTask.title = "Task test"
+        mockTask.type = TypeOptions.ToDo.rawValue
+        mockTask.status = StatusOptions.ToDo.rawValue
+        mockTask.date = Date()
+        mockTask.score = 50
+        mockTask.maxScore = 100
+        mockTask.taskDescription = "Description test"
+        
+        return NavigationView {
+            TaskDetailsView(task: mockTask)
+                .environmentObject(ModelData())
+                .environment(\.managedObjectContext, context)
         }
     }
 }
