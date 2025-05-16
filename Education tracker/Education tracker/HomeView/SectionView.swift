@@ -11,10 +11,13 @@ struct SectionView: View {
     let sectionName: String
     @State private var pendingDeletionIndices = Set<Int>()
     @State private var deletionTimer: Timer?
-    @Binding var tasks: [TaskItem]
+    @State var tasks: [ClassTask]
+
+    @EnvironmentObject var modelData: ModelData
     var sectionEnum: SectionEnum
+    var updateTasks: () -> Void
     
-    private func tasksDeletion(index: Int) {
+    private func tasksUpdate(index: Int) {
         if pendingDeletionIndices.contains(index) {
             pendingDeletionIndices.remove(index)
         } else {
@@ -24,11 +27,11 @@ struct SectionView: View {
         deletionTimer?.invalidate() 
             
         deletionTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
-            let sortedIndices = pendingDeletionIndices.sorted(by: >)
-            for index in sortedIndices {
-                tasks.remove(at: index)
+            for index in pendingDeletionIndices {
+                modelData.updateTask(tasks[index], isDone: true, newStatus: .Done)
             }
             pendingDeletionIndices.removeAll()
+            updateTasks()
         }
     }
     
@@ -38,14 +41,29 @@ struct SectionView: View {
                 .font(.headline)
                 .padding(.horizontal)
             
-            ForEach($tasks.indices, id: \.self) { i in
+            ForEach(Array(tasks.enumerated()), id: \.element.id) { index, task in
                 NavigationLink {
-                    TaskDetailsView(taskName: tasks[i].title, currentScore: tasks[i].score, maxScore: tasks[i].maxScore, taskType: tasks[i].type, taskDeadline: tasks[i].date, taskStatus: tasks[i].status, taskDescription: tasks[i].description)
-                }
-                label: {
-                    TaskRow(task: $tasks[i], sectionEnum: sectionEnum, onDelete: {
-                        tasksDeletion(index: i)
-                    })
+                    TaskDetailsView(task: task)
+                        .environmentObject(modelData)
+                } label: {
+                    TaskRow(
+                        task: task,
+                        sectionEnum: sectionEnum,
+                        onTap: {
+                            tasksUpdate(index: index)
+                        }
+                    )
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            let delTask = task
+                            tasks.removeAll { $0.id == delTask.id }
+                            modelData.allTasks.removeAll { $0.id == delTask.id }
+                            modelData.deleteTask(delTask)
+                            updateTasks()
+                        } label: {
+                            Label("Удалить", systemImage: "trash")
+                        }
+                    }
                 }
             }
         }
@@ -53,23 +71,28 @@ struct SectionView: View {
     }
 }
 
-
-
 #Preview {
-    SectionView(sectionName: "Test", tasks: .constant([
-        TaskItem(
-            title: "Team meeting",
-            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
-            score: 0,
-            status: .ToDo,
-            type: .Remind
-        ),
-        TaskItem(
-            title: "Team meeting",
-            date: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
-            score: 0,
-            status: .ToDo,
-            type: .Remind
+    let context = CoreDataManager.shared.context
+    
+    let task1 = ClassTask(context: context)
+    task1.id = UUID()
+    task1.title = "Test Task 1"
+    task1.date = Date()
+    task1.type = TypeOptions.ToDo.rawValue
+    task1.status = StatusOptions.ToDo.rawValue
+    task1.score = 0
+    task1.maxScore = 10
+    task1.taskDescription = "Test description 1"
+    task1.isDone = false
+    
+    return NavigationView {
+        SectionView(
+            sectionName: "Test Section",
+            tasks: [task1],
+            sectionEnum: .today,
+            updateTasks: {}
         )
-    ]), sectionEnum: .today)
+        .environmentObject(ModelData())
+        .environment(\.managedObjectContext, context)
+    }
 }

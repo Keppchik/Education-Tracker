@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct TasksList: View {
-    @Binding var myLists: [MyListModel]
+    @Binding var myLists: [ClassTaskList]
+    @EnvironmentObject var modelData: ModelData
+    
     var body: some View {
         VStack {
             Text("My Lists")
@@ -17,9 +19,24 @@ struct TasksList: View {
                 .font(.system(size: 28))
             
             ScrollView {
-                ForEach($myLists, id: \.self) { list in
-                    ListRow(name: list.name, items: list.items)
-                        .animation(.default, value: 0)
+                ForEach(myLists, id: \.id) { list in
+                    ListRow(name: list.name, items: list.tasksArray)
+                        .contextMenu {
+                            Button {
+                                //TODO: экран изменения листа
+                            } label: {
+                                Label("Редактировать", systemImage: "pencil")
+                            }
+                            
+                            Button(role: .destructive) {
+                                let delList = list
+                                myLists.removeAll { $0.id == delList.id }
+                                modelData.allLists.removeAll { $0.id == delList.id }
+                                modelData.deleteList(delList)
+                            } label: {
+                                Label("Удалить", systemImage: "trash")
+                            }
+                        }
                 }
                 Color.clear
                     .frame(height: 80)
@@ -32,125 +49,6 @@ struct TasksList: View {
 }
 
 #Preview {
-    TasksList(myLists: .constant([
-        MyListModel(name: "Name1", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]),
-        MyListModel(name: "Name2", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]),
-        MyListModel(name: "Name7", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]),
-        MyListModel(name: "Name8", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ])]))
+    TasksList(myLists: .constant([]))
+        .environmentObject(ModelData())
 }

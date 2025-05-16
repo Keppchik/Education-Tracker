@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ListRow: View {
-    @Binding var name: String
-    @Binding var items: [TaskItem]
+    @State var name: String
+    @State var items: [ClassTask]
     @State var isExpanded = false
     @Environment(\.colorScheme) private var colorScheme
     
@@ -45,7 +45,7 @@ struct ListRow: View {
         
         ForEach(Array(items.enumerated()), id: \.element) { index, item in
             if isExpanded {
-                NavigationLink { TaskDetailsView(taskName: item.title, currentScore: item.score, maxScore: item.maxScore, taskType: item.type, taskDeadline: item.date, taskStatus: item.status, taskDescription: item.description) } 
+                NavigationLink { TaskDetailsView(task: item) }
                 label: {
                     HStack {
                         Image(systemName: "circle.fill")
@@ -65,40 +65,10 @@ struct ListRow: View {
                     )
                 )
             }
-        }
+        } 
     }
 }
 
 #Preview {
-    ListRow(name: .constant("List name"), items: .constant(
-        [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]))
+    ListRow(name: "List name", items: [])
 }

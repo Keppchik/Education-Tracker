@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum StatusOptions:  Int, Identifiable, CaseIterable {
-    case ToDo
-    case InProgress
-    case Done
+enum StatusOptions: Int16, Identifiable, CaseIterable {
+    case ToDo = 0
+    case InProgress = 1
+    case Done = 2
     
     var name: String {
         switch self {
@@ -22,16 +22,16 @@ enum StatusOptions:  Int, Identifiable, CaseIterable {
             return "Done"
         }
     }
-    var id: Int {
+    var id: Int16 {
         rawValue
     }
 }
 
-enum TypeOptions: Int, Identifiable, CaseIterable{
-    case ToDo
-    case Meeting
-    case Remind
-    case Learn
+enum TypeOptions: Int16, Identifiable, CaseIterable{
+    case ToDo = 0
+    case Meeting = 1
+    case Remind = 2
+    case Learn = 3
         
     var name: String {
         switch self {
@@ -46,7 +46,7 @@ enum TypeOptions: Int, Identifiable, CaseIterable{
         
         }
     }
-    var id: Int{
+    var id: Int16 {
         rawValue
     }
 }

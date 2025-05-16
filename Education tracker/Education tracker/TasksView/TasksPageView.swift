@@ -7,112 +7,22 @@
 
 import SwiftUI
 
-struct MyListModel: Hashable {
-    let id: UUID = UUID()
-    var name: String
-    var items: [TaskItem]
-}
-
 struct TasksPageView: View {
+    @EnvironmentObject var modelData: ModelData
     @State private var newListSheet = false
     @State private var newListName: String = ""
-    @State private var myLists: [MyListModel] = [
-        MyListModel(name: "Name1", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]),
-        MyListModel(name: "Name2", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]),
-        MyListModel(name: "Name3", items: [
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            ),
-            TaskItem(
-                title: "Team meeting",
-                date: Date(),
-                score: 0,
-                status: .ToDo,
-                type: .Remind
-            )
-        ]),
-    ]
-        //TODO: Добавить брать из Core Data
+    @State private var myLists: [ClassTaskList]
+    init() {
+        _myLists = State(initialValue: [])
+    }
     
     @State private var showAddTaskView = false
     
-    var body: some View {
+    private func deleteList(list: ClassTaskList) {
+        myLists.removeAll { $0.id == list.id }
+    }
+    
+    var body: some View {        
         VStack {
             Menu {
                 Button(action: { newListSheet = true }) {
@@ -131,7 +41,7 @@ struct TasksPageView: View {
             .padding(.trailing, 32)
             .padding(.vertical, 8)
             .background(
-                NavigationLink(destination: AddingTaskPageView(), isActive: $showAddTaskView) {}
+                NavigationLink(destination: AddingTaskPageView().environmentObject(modelData), isActive: $showAddTaskView) {}
             )
             
             Text("Tasks")
@@ -140,9 +50,14 @@ struct TasksPageView: View {
                 .padding(.leading)
             
             TasksButtons()
+                .environmentObject(modelData)
             
             TasksList(myLists: $myLists)
+                .environmentObject(modelData)
                 .padding(.top)
+        }
+        .onAppear() {
+            myLists = modelData.allLists
         }
         .sheet(isPresented: $newListSheet) {
             VStack(alignment: .center, spacing: 16) {
@@ -161,7 +76,7 @@ struct TasksPageView: View {
                     Spacer()
                     
                     Button {
-                        myLists.append(MyListModel(name: newListName, items: []))
+                        myLists.append(modelData.createList(name: newListName))
                         newListName = ""
                         newListSheet = false
                     }
@@ -186,7 +101,7 @@ struct TasksPageView: View {
                             if newListName.isEmpty {
                                 return
                             }
-                            myLists.append(MyListModel(name: newListName, items: []))
+                            myLists.append(modelData.createList(name: newListName))
                             newListName = ""
                             newListSheet = false
                         }
@@ -205,4 +120,5 @@ struct TasksPageView: View {
 
 #Preview {
     TasksPageView()
+        .environmentObject(ModelData())
 }

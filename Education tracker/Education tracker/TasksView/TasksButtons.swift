@@ -9,6 +9,24 @@ import SwiftUI
 
 struct TasksButtons: View {
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject var modelData: ModelData
+    
+    var todoTasksCount: Int {
+        modelData.allTasks.filter { task in
+            task.status == StatusOptions.ToDo.rawValue
+        }.count
+    }
+    var inProgressTasksCount: Int {
+        modelData.allTasks.filter { task in
+            task.status == StatusOptions.InProgress.rawValue
+        }.count
+    }
+    var doneTasksCount: Int {
+        modelData.allTasks.filter { task in
+            task.status == StatusOptions.Done.rawValue
+        }.count
+    }
+    
     var body: some View {
         HStack {
             Button { } //TODO: Добавить переход на страницу с заданиями
@@ -29,7 +47,7 @@ struct TasksButtons: View {
                             .font(.system(size: 20))
                             .padding(.top, 10)
                             .padding(.bottom, 1)
-                        Text("4 tasks") //TODO: Писать кол-во таксов из Core Data
+                        Text("\(todoTasksCount) tasks")
                             .opacity(0.5)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -56,7 +74,7 @@ struct TasksButtons: View {
                             .font(.system(size: 20))
                             .padding(.top, 10)
                             .padding(.bottom, 1)
-                        Text("2 tasks") //TODO: Писать кол-во таксов из Core Data
+                        Text("\(inProgressTasksCount) tasks")
                             .opacity(0.5)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -84,7 +102,7 @@ struct TasksButtons: View {
                         .font(.system(size: 20))
                         .padding(.top, 10)
                         .padding(.bottom, 1)
-                    Text("1 tasks") //TODO: Писать кол-во таксов из Core Data
+                    Text("\(doneTasksCount) tasks") 
                         .opacity(0.5)
                 }
                 .frame(width: UIScreen.main.bounds.width / 2 - 50, alignment: .leading)
@@ -99,4 +117,5 @@ struct TasksButtons: View {
 
 #Preview {
     TasksButtons()
+        .environmentObject(ModelData())
 }

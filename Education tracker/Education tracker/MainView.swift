@@ -9,15 +9,19 @@ import SwiftUI
 
 struct MainView: View {
     @State var selectedIndex: PageIndex = .house
+    @EnvironmentObject var modelData: ModelData
+    
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 TabView(selection: $selectedIndex) {
                     HomeView()
+                        .environmentObject(modelData)
                         .padding(.top)
                         .tag(PageIndex.house)
                     
                     TasksPageView()
+                        .environmentObject(modelData)
                         .padding(.top)
                         .tag(PageIndex.tasks)
                     
@@ -36,4 +40,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
+        .environmentObject(ModelData())
 }
