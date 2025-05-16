@@ -2,17 +2,21 @@
 //  SettingsPageView.swift
 //  Education tracker
 //
-//  Created by Иван Миронов on 11.04.2025.
+//  Создан Иваном Миронов 11.04.2025.
 //
-
 
 import SwiftUI
 
+/// Перечисление параметров темы интерфейса.
+///
+/// Используется для переключения цветовой схемы приложения.
+/// `AppStorage("selectedTheme")` сохраняет выбор пользователя между запусками.
 enum themeOptions: Int, Identifiable, CaseIterable {
     case light
     case dark
     case systemDefault
     
+    /// Читаемое имя опции.
     var name: String {
         switch self {
         case .light:
@@ -23,7 +27,9 @@ enum themeOptions: Int, Identifiable, CaseIterable {
             return "System default"
         }
     }
-        
+    
+    /// Соответствующая схема цвета для `ColorScheme`.
+    /// `nil` означает использование системной настройки.
     var colorScheme: ColorScheme? {
         switch self {
         case .systemDefault:
@@ -38,15 +44,29 @@ enum themeOptions: Int, Identifiable, CaseIterable {
     var id: Int { rawValue }
 }
 
+/// Экран настроек приложения.
+///
+/// Содержит разделы:
+/// * Appearance — выбор темы (Light / Dark / System);
+/// * Notifications — переключатель напоминаний о дедлайнах;
+/// * Data — экспорт данных (CSV, PDF);
+/// * Storage — переход к очистке хранилища;
+/// * About — версия и разработчики.
 struct SettingsView: View {
+    // MARK: - Состояние
+    /// Флаг напоминаний о дедлайнах.
     @State private var isDeadlineRemindersOn = false
+    /// Выбранная тема (сохраняется через `AppStorage`).
     @AppStorage("selectedTheme") private var selectedTheme: themeOptions = .systemDefault
+    /// Флаг отображения списка тем.
     @State private var showThemeOptions = false
     
+    // MARK: - UI
     var body: some View {
         VStack {
             Text("Settings")
                 .font(.system(size: 18, weight: .bold))
+            
             ScrollView {
                 // ===== APPEARANCE =====
                 VStack(alignment: .leading, spacing: 0) {
@@ -54,8 +74,8 @@ struct SettingsView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .padding(.top)
-                       
-                    // Theme selection
+                    
+                    // Выбор темы
                     HStack {
                         Text("Theme")
                             .font(.body)
@@ -68,12 +88,13 @@ struct SettingsView: View {
                     .padding(.vertical, 10)
                     .contentShape(Rectangle())
                     .onTapGesture {
+                        // Показ / скрытие списка опций темы
                         withAnimation(.easeInOut(duration: 0.2)) {
                             showThemeOptions.toggle()
                         }
                     }
-                        
-                    // Logic for list themeOptions
+                    
+                    // Список вариантов темы
                     if showThemeOptions {
                         ForEach(themeOptions.allCases) { index in
                             HStack {
@@ -96,16 +117,15 @@ struct SettingsView: View {
                         }
                     }
                 }
-                    
-                    
+                
                 // ===== NOTIFICATIONS =====
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Notifications")
                         .font(.headline)
                         .fontWeight(.bold)
                         .padding(.top, 15)
-                        
-                    // Deadline reminders toggle
+                    
+                    // Тоггл напоминаний о дедлайне
                     HStack {
                         Toggle("Deadline reminders", isOn: $isDeadlineRemindersOn)
                             .toggleStyle(SwitchToggleStyle(tint: .blue))
@@ -114,15 +134,14 @@ struct SettingsView: View {
                     }
                 }
                 .padding(.bottom, 10)
-                    
-                    
-                // ===== Data =====
+                
+                // ===== DATA =====
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Data")
                         .font(.headline)
                         .fontWeight(.bold)
-                        
-                    // CSV Export
+                    
+                    // Экспорт CSV
                     Button(action: {}) {
                         HStack {
                             Text("Export")
@@ -133,10 +152,9 @@ struct SettingsView: View {
                         }
                         .padding(.vertical, 15)
                         .contentShape(Rectangle())
-                        .onTapGesture {}
                     }
-                        
-                    // PDF Export
+                    
+                    // Экспорт PDF
                     Button(action: {}) {
                         HStack {
                             Text("Export")
@@ -151,14 +169,13 @@ struct SettingsView: View {
                 }
                 .padding(.bottom, 20)
                 .padding(.top, 15)
-                    
-                    
+                
                 // ===== STORAGE =====
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Storage")
                         .font(.headline)
                         .fontWeight(.bold)
-                        
+                    
                     NavigationLink(destination: CleanupView()) {
                         HStack {
                             Text("Cleanup")
@@ -171,21 +188,18 @@ struct SettingsView: View {
                         .padding(.bottom, 10)
                         .contentShape(Rectangle())
                     }
-                    
                     .buttonStyle(PlainButtonStyle())
                 }
                 .padding(.bottom, 20)
-                    
-                    
-                    
+                
                 // ===== ABOUT =====
                 VStack(alignment: .leading, spacing: 0) {
                     Text("About")
                         .font(.headline)
                         .fontWeight(.bold)
                         .padding(.top, 15)
-                        
-                    // Version
+                    
+                    // Версия приложения
                     HStack {
                         Text("Version")
                         Spacer()
@@ -193,8 +207,8 @@ struct SettingsView: View {
                             .foregroundColor(.gray)
                     }
                     .padding(.vertical)
-                        
-                    // Developers
+                    
+                    // Разработчики
                     HStack {
                         Text("Developers")
                         Spacer()
@@ -205,6 +219,7 @@ struct SettingsView: View {
                 }
                 .padding(.bottom, 20)
                 
+                // Пустой блок для отступа внизу, чтобы кнопка не пряталась под баром
                 Color.clear
                     .frame(height: 70)
             }
@@ -215,6 +230,7 @@ struct SettingsView: View {
     }
 }
 
+/// Экран очистки данных приложения.
 struct CleanupView: View {
     var body: some View {
         Text("Cleanup Page")

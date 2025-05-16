@@ -2,30 +2,47 @@
 //  SectionView.swift
 //  Education tracker
 //
-//  Created by Иван Кретов on 21.04.2025.
+//  Создан Иваном Кретовым 21.04.2025.
 //
 
 import SwiftUI
 
+/// Контейнер раздела задач («Сегодня», «Завтра», «Позже»).
+///
+/// Отображает название секции и список `TaskRow`.
+/// Поддерживает «отложенное» завершение задачи: после тап‑нажатия на чекбокс
+/// задача помещается в очередь `pendingDeletionIndices`; если в течение 2 секунд
+/// пользователь не отменил действие, вызывается `modelData.updateTask` со
+/// статусом `.Done` и происходит обновление списка через `updateTasks()`.
 struct SectionView: View {
+    // MARK: - Параметры
     let sectionName: String
+    /// Индексы задач в очереди «будет отмечена как выполненная».
     @State private var pendingDeletionIndices = Set<Int>()
+    /// Таймер обратного отсчёта перед финальным завершением.
     @State private var deletionTimer: Timer?
+    /// Задачи, относящиеся к текущей секции.
     @State var tasks: [ClassTask]
-
+    
+    // MARK: - Зависимости среды
     @EnvironmentObject var modelData: ModelData
+    /// Текущая секция (`today`, `tomorrow`, `later`).
     var sectionEnum: SectionEnum
+    /// Колбэк родительского экрана — вызов при изменении задач.
     var updateTasks: () -> Void
     
+    // MARK: - Локальная логика
+    /// Обрабатывает тап на чекбокс: добавляет/убирает индекс и перезапускает таймер.
     private func tasksUpdate(index: Int) {
         if pendingDeletionIndices.contains(index) {
+            // Отмена, если нажали повторно
             pendingDeletionIndices.remove(index)
         } else {
             pendingDeletionIndices.insert(index)
         }
-            
-        deletionTimer?.invalidate() 
-            
+        
+        // Сброс и запуск таймера
+        deletionTimer?.invalidate()
         deletionTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
             for index in pendingDeletionIndices {
                 modelData.updateTask(tasks[index], isDone: true, newStatus: .Done)
@@ -35,13 +52,16 @@ struct SectionView: View {
         }
     }
     
+    // MARK: - UI
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            // Заголовок секции
             Text(sectionName)
                 .font(.headline)
                 .padding(.horizontal)
             
-            ForEach(Array(tasks.enumerated()), id: \.element.id) { index, task in
+            // Список задач
+            ForEach(Array(tasks.enumerated()), id: \ .element.id) { index, task in
                 NavigationLink {
                     TaskDetailsView(task: task)
                         .environmentObject(modelData)
@@ -53,6 +73,7 @@ struct SectionView: View {
                             tasksUpdate(index: index)
                         }
                     )
+                    // Контекстное меню удаления
                     .contextMenu {
                         Button(role: .destructive) {
                             let delTask = task
@@ -71,6 +92,7 @@ struct SectionView: View {
     }
 }
 
+// MARK: - Превью
 #Preview {
     let context = CoreDataManager.shared.context
     

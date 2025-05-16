@@ -2,35 +2,51 @@
 //  TasksButtons.swift
 //  Education tracker
 //
-//  Created by Иван Кретов on 07.04.2025.
+//  Создан Иваном Кретовым 07.04.2025.
 //
 
 import SwiftUI
 
+/// Панель карточек‑кнопок для быстрого перехода к задачам по статусам.
+///
+/// Содержит две горизонтальные карточки («Todo», «In Progress») и одну
+/// карточку во второй строке («Completed»).
+/// Каждая карточка отображает количество задач соответствующего статуса и
+/// служит триггером навигации (переходы будут реализованы позже, отмечены `TODO`).
 struct TasksButtons: View {
+    // MARK: - Окружение
+    /// Цветовая схема (light / dark) для настройки прозрачности границы.
     @Environment(\.colorScheme) private var colorScheme
+    
+    /// Глобальная модель данных с задачами.
     @EnvironmentObject var modelData: ModelData
     
+    // MARK: - Подсчёт задач по статусам
+    /// Количество задач со статусом «Todo».
     var todoTasksCount: Int {
         modelData.allTasks.filter { task in
             task.status == StatusOptions.ToDo.rawValue
         }.count
     }
+    /// Количество задач «In Progress».
     var inProgressTasksCount: Int {
         modelData.allTasks.filter { task in
             task.status == StatusOptions.InProgress.rawValue
         }.count
     }
+    /// Количество завершённых задач.
     var doneTasksCount: Int {
         modelData.allTasks.filter { task in
             task.status == StatusOptions.Done.rawValue
         }.count
     }
     
+    // MARK: - Разметка
     var body: some View {
+        // Первая строка: две карточки
         HStack {
-            Button { } //TODO: Добавить переход на страницу с заданиями
-            label: {
+            // Карточка «Todo»
+            Button { /* TODO: Переход на страницу списка задач */ } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(lineWidth: 2)
@@ -56,8 +72,8 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
             
-            Button { } //TODO: Добавить переход на страницу с заданиями
-            label: {
+            // Карточка «In Progress»
+            Button { /* TODO: Переход на страницу списка задач */ } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(lineWidth: 2)
@@ -84,8 +100,8 @@ struct TasksButtons: View {
             }
         }
         
-        Button { } //TODO: Добавить переход на страницу с заданиями
-        label: {
+        // Вторая строка: одна широкая карточка «Completed»
+        Button { /* TODO: Переход на страницу списка задач */ } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(lineWidth: 2)
@@ -102,7 +118,7 @@ struct TasksButtons: View {
                         .font(.system(size: 20))
                         .padding(.top, 10)
                         .padding(.bottom, 1)
-                    Text("\(doneTasksCount) tasks") 
+                    Text("\(doneTasksCount) tasks")
                         .opacity(0.5)
                 }
                 .frame(width: UIScreen.main.bounds.width / 2 - 50, alignment: .leading)
