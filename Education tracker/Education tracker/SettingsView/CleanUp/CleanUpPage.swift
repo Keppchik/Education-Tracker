@@ -1,5 +1,5 @@
 //
-//  ButtonDel.swift
+//  CleanUpPage.swift
 //  Education tracker
 //
 //  Created by Иван Миронов on 16.05.2025.
