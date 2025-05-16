@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
-		2C75531C2DD3A00C009453DD /* PBXContainerItemProxy */ = {
+		2CFEA5F42D9FF80D00362D0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CFEA5D62D9FF80C00362D0D /* Project object */;
 			proxyType = 1;
@@ -24,41 +24,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2CC55B7F2DD781130072A762 /* EducationTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EducationTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CC55B802DD781130072A762 /* Education tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Education tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CC55B812DD781130072A762 /* Education trackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Education trackerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CFEA5DE2D9FF80C00362D0D /* Education tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Education tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CFEA5F32D9FF80D00362D0D /* Education trackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Education trackerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CFEA5FD2D9FF80D00362D0D /* Education trackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Education trackerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2C7553252DD3B958009453DD /* Exceptions for "Education tracker" folder in "EducationTrackerTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Core Data/Education_tracker.xcdatamodeld",
-			);
-			target = 2C7553172DD3A00C009453DD /* EducationTrackerTests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2CFEA5E02D9FF80C00362D0D /* Education tracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				2C7553252DD3B958009453DD /* Exceptions for "Education tracker" folder in "EducationTrackerTests" target */,
-			);
 			path = "Education tracker";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2C7553152DD3A00C009453DD /* Frameworks */ = {
+		2CFEA5DB2D9FF80C00362D0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2CFEA5DB2D9FF80C00362D0D /* Frameworks */ = {
+		2CFEA5F02D9FF80D00362D0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -78,36 +65,24 @@
 		2CFEA5D52D9FF80C00362D0D = {
 			isa = PBXGroup;
 			children = (
+				2CFEA5DF2D9FF80C00362D0D /* Products */,
 				2CFEA5E02D9FF80C00362D0D /* Education tracker */,
-				2CC55B7F2DD781130072A762 /* EducationTrackerTests.xctest */,
-				2CC55B802DD781130072A762 /* Education tracker.app */,
-				2CC55B812DD781130072A762 /* Education trackerUITests.xctest */,
 			);
+			sourceTree = "<group>";
+		};
+		2CFEA5DF2D9FF80C00362D0D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CFEA5DE2D9FF80C00362D0D /* Education tracker.app */,
+				2CFEA5F32D9FF80D00362D0D /* Education trackerTests.xctest */,
+				2CFEA5FD2D9FF80D00362D0D /* Education trackerUITests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2C7553172DD3A00C009453DD /* EducationTrackerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2C75531E2DD3A00C009453DD /* Build configuration list for PBXNativeTarget "EducationTrackerTests" */;
-			buildPhases = (
-				2C7553142DD3A00C009453DD /* Sources */,
-				2C7553152DD3A00C009453DD /* Frameworks */,
-				2C7553162DD3A00C009453DD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2C75531D2DD3A00C009453DD /* PBXTargetDependency */,
-			);
-			name = EducationTrackerTests;
-			packageProductDependencies = (
-			);
-			productName = EducationTrackerTests;
-			productReference = 2CC55B7F2DD781130072A762 /* EducationTrackerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		2CFEA5DD2D9FF80C00362D0D /* Education tracker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2CFEA6072D9FF80D00362D0D /* Build configuration list for PBXNativeTarget "Education tracker" */;
@@ -127,8 +102,28 @@
 			packageProductDependencies = (
 			);
 			productName = "Education tracker";
-			productReference = 2CC55B802DD781130072A762 /* Education tracker.app */;
+			productReference = 2CFEA5DE2D9FF80C00362D0D /* Education tracker.app */;
 			productType = "com.apple.product-type.application";
+		};
+		2CFEA5F22D9FF80D00362D0D /* Education trackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CFEA60A2D9FF80D00362D0D /* Build configuration list for PBXNativeTarget "Education trackerTests" */;
+			buildPhases = (
+				2CFEA5EF2D9FF80D00362D0D /* Sources */,
+				2CFEA5F02D9FF80D00362D0D /* Frameworks */,
+				2CFEA5F12D9FF80D00362D0D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CFEA5F52D9FF80D00362D0D /* PBXTargetDependency */,
+			);
+			name = "Education trackerTests";
+			packageProductDependencies = (
+			);
+			productName = "Education trackerTests";
+			productReference = 2CFEA5F32D9FF80D00362D0D /* Education trackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		2CFEA5FC2D9FF80D00362D0D /* Education trackerUITests */ = {
 			isa = PBXNativeTarget;
@@ -147,7 +142,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Education trackerUITests";
-			productReference = 2CC55B812DD781130072A762 /* Education trackerUITests.xctest */;
+			productReference = 2CFEA5FD2D9FF80D00362D0D /* Education trackerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -160,12 +155,12 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					2C7553172DD3A00C009453DD = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 2CFEA5DD2D9FF80C00362D0D;
-					};
 					2CFEA5DD2D9FF80C00362D0D = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					2CFEA5F22D9FF80D00362D0D = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 2CFEA5DD2D9FF80C00362D0D;
 					};
 					2CFEA5FC2D9FF80D00362D0D = {
 						CreatedOnToolsVersion = 16.2;
@@ -183,26 +178,26 @@
 			mainGroup = 2CFEA5D52D9FF80C00362D0D;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 2CFEA5D52D9FF80C00362D0D;
+			productRefGroup = 2CFEA5DF2D9FF80C00362D0D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				2CFEA5DD2D9FF80C00362D0D /* Education tracker */,
+				2CFEA5F22D9FF80D00362D0D /* Education trackerTests */,
 				2CFEA5FC2D9FF80D00362D0D /* Education trackerUITests */,
-				2C7553172DD3A00C009453DD /* EducationTrackerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2C7553162DD3A00C009453DD /* Resources */ = {
+		2CFEA5DC2D9FF80C00362D0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2CFEA5DC2D9FF80C00362D0D /* Resources */ = {
+		2CFEA5F12D9FF80D00362D0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -219,14 +214,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2C7553142DD3A00C009453DD /* Sources */ = {
+		2CFEA5DA2D9FF80C00362D0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2CFEA5DA2D9FF80C00362D0D /* Sources */ = {
+		2CFEA5EF2D9FF80D00362D0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,10 +238,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2C75531D2DD3A00C009453DD /* PBXTargetDependency */ = {
+		2CFEA5F52D9FF80D00362D0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2CFEA5DD2D9FF80C00362D0D /* Education tracker */;
-			targetProxy = 2C75531C2DD3A00C009453DD /* PBXContainerItemProxy */;
+			targetProxy = 2CFEA5F42D9FF80D00362D0D /* PBXContainerItemProxy */;
 		};
 		2CFEA5FF2D9FF80D00362D0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -256,42 +251,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2C75531F2DD3A00C009453DD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = mycompany.EducationTrackerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Education tracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Education tracker";
-			};
-			name = Debug;
-		};
-		2C7553202DD3A00C009453DD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = mycompany.EducationTrackerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Education tracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Education tracker";
-			};
-			name = Release;
-		};
 		2CFEA6052D9FF80D00362D0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -419,21 +378,21 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Education tracker/Preview Content\"";
-				DEVELOPMENT_TEAM = 8869MH63SP;
+				DEVELOPMENT_TEAM = 4ZS5FZHXJ3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "mycompany.Education-tracker-8";
+				PRODUCT_BUNDLE_IDENTIFIER = "Education-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -449,25 +408,61 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Education tracker/Preview Content\"";
-				DEVELOPMENT_TEAM = 8869MH63SP;
+				DEVELOPMENT_TEAM = 4ZS5FZHXJ3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "mycompany.Education-tracker-8";
+				PRODUCT_BUNDLE_IDENTIFIER = "Education-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2CFEA60B2D9FF80D00362D0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mycompany.Education-trackerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Education tracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Education tracker";
+			};
+			name = Debug;
+		};
+		2CFEA60C2D9FF80D00362D0D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mycompany.Education-trackerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Education tracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Education tracker";
 			};
 			name = Release;
 		};
@@ -506,15 +501,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2C75531E2DD3A00C009453DD /* Build configuration list for PBXNativeTarget "EducationTrackerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2C75531F2DD3A00C009453DD /* Debug */,
-				2C7553202DD3A00C009453DD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2CFEA5D92D9FF80C00362D0D /* Build configuration list for PBXProject "Education tracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -529,6 +515,15 @@
 			buildConfigurations = (
 				2CFEA6082D9FF80D00362D0D /* Debug */,
 				2CFEA6092D9FF80D00362D0D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CFEA60A2D9FF80D00362D0D /* Build configuration list for PBXNativeTarget "Education trackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CFEA60B2D9FF80D00362D0D /* Debug */,
+				2CFEA60C2D9FF80D00362D0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
