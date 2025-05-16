@@ -2,22 +2,32 @@
 //  BottomBar.swift
 //  Education tracker
 //
-//  Created by Иван Кретов on 05.04.2025.
+//  Создан Иваном Кретовым 05.04.2025.
 //
-
 
 import SwiftUI
 
+/// Индекс текущей страницы приложения.
+///
+/// Используется для синхронизации выбранной вкладки между `MainView` и `BottomBar`.
 enum PageIndex: Int {
-    case house
-    case tasks
-    case settings
+    case house   // Домашняя страница
+    case tasks   // Страница задач
+    case settings // Страница настроек
 }
 
+/// Кастомная нижняя панель навигации.
+///
+/// Состоит из трёх кнопок‑вкладок (Домой, Задачи, Настройки).
+/// Каждая кнопка содержит системную иконку и подпись.
+/// Активная вкладка подсвечена цветом `Color.primary`, остальные — `Color.gray`.
 struct BottomBar: View {
+    /// Ссылка на выбранный индекс. При изменении обновляется родительский `TabView`.
     @Binding var selectedIndex: PageIndex
+    
     var body: some View {
         ZStack {
+            // Фон панели: прямоугольник с обводкой.
             Rectangle()
                 .stroke(.primary, lineWidth: 1.5)
                 .fill(.background)
@@ -26,6 +36,7 @@ struct BottomBar: View {
             HStack {
                 Spacer()
                 
+                // MARK: - Кнопка «Домой»
                 Button { selectedIndex = .house }
                 label: {
                     VStack(spacing: 0) {
@@ -42,6 +53,7 @@ struct BottomBar: View {
                 
                 Spacer()
                 
+                // MARK: - Кнопка «Задачи»
                 Button { selectedIndex = .tasks }
                 label: {
                     VStack(spacing: 0) {
@@ -59,6 +71,7 @@ struct BottomBar: View {
                 
                 Spacer()
                 
+                // MARK: - Кнопка «Настройки»
                 Button { selectedIndex = .settings }
                 label: {
                     VStack(spacing: 0) {
@@ -74,7 +87,7 @@ struct BottomBar: View {
                 }
                 Spacer()
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, 10) // Радиус клика и визуальная коррекция
         }
     }
 }
