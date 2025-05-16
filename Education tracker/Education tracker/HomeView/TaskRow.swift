@@ -42,6 +42,9 @@ struct TaskRow: View {
             }
             
         }
+        .onAppear() {
+            isTapped = task.isDone
+        }
         .padding()
         .background(RoundedRectangle(cornerRadius: 12).fill(colorScheme == .light ? .white : .white.opacity(0.12)))
         .shadow(color: Color.primary.opacity(0.1), radius: 3, x: 2, y: 2)

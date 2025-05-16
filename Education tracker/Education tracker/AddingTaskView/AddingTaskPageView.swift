@@ -28,7 +28,7 @@ struct AddingTaskPageView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        NavigationView {
+        VStack {
             ScrollView{
                 
                 //===== Task Name =====
@@ -104,8 +104,7 @@ struct AddingTaskPageView: View {
                     newScore: currentScore,
                     newMaxScore: maxScore
                 )
-                
-                presentationMode.wrappedValue.dismiss()
+                //presentationMode.wrappedValue.dismiss()
             } else {
                 modelData.createTask(
                     title: name,

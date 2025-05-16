@@ -17,8 +17,6 @@ struct TaskDetailsView: View {
     
     @State private var editScore = false
     
-    let predefinedTypes = ["Meeting", "Documentation", "Design", "Development", "Review"]
-    
     var formattedDeadline: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long

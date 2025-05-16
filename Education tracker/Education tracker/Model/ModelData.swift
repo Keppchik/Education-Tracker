@@ -58,6 +58,7 @@ class ModelData: ObservableObject {
             list.addToTasks(task)
         }
         
+        allTasks.append(task)
         saveContext()
     }
     

@@ -11,6 +11,10 @@ struct TasksButtons: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var modelData: ModelData
     
+    @State private var toDoTasks: [ClassTask] = []
+    @State private var inProgressTasks: [ClassTask] = []
+    @State private var doneTasks: [ClassTask] = []
+    
     var todoTasksCount: Int {
         modelData.allTasks.filter { task in
             task.status == StatusOptions.ToDo.rawValue
@@ -29,7 +33,7 @@ struct TasksButtons: View {
     
     var body: some View {
         HStack {
-            Button { } //TODO: Добавить переход на страницу с заданиями
+            NavigationLink { StatusTasksView(status: .ToDo).environmentObject(modelData) }
             label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -42,7 +46,7 @@ struct TasksButtons: View {
                     VStack(alignment: .leading) {
                         Image(systemName: "arrow.down")
                             .font(.system(size: 24))
-                        Text("Todo")
+                        Text("ToDo")
                             .fontWeight(.bold)
                             .font(.system(size: 20))
                             .padding(.top, 10)
@@ -56,7 +60,7 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
             
-            Button { } //TODO: Добавить переход на страницу с заданиями
+            NavigationLink { StatusTasksView(status: .InProgress).environmentObject(modelData) }
             label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -83,8 +87,13 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
         }
+        .onAppear {
+            toDoTasks = modelData.allTasks.filter { $0.status == StatusOptions.ToDo.rawValue }
+            inProgressTasks = modelData.allTasks.filter { $0.status == StatusOptions.InProgress.rawValue}
+            doneTasks = modelData.allTasks.filter { $0.status == StatusOptions.Done.rawValue}
+        }
         
-        Button { } //TODO: Добавить переход на страницу с заданиями
+        NavigationLink { StatusTasksView(status: .Done).environmentObject(modelData) }
         label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
