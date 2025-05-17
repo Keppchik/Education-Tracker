@@ -23,24 +23,39 @@ struct DeadlineView: View {
         }
     }
     
+    private var timeText: String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: selectedDate)
+        
+        if let hour = components.hour, let minute = components.minute {
+            return String(format: "%02d:%02d", hour, minute)
+        } else {
+            return ""
+        }
+    }
+    
     var body: some View {
-        Button(action: {
-            isShowCalendar = true
-        }) {
-            HStack {
-                Text("Deadline")
-                    .foregroundColor(.primary)
-                Spacer()
-                Text(displayText)
-                    .foregroundColor(.primary)
+        HStack {
+            Button(action: {
+                isShowCalendar = true
+            }) {
+                HStack {
+                    Text("Deadline")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Text(displayText)
+                        .foregroundColor(.primary)
+                    Text(timeText)
+                        .foregroundColor(.primary)
+                }
             }
         }
         .sheet(isPresented: $isShowCalendar) {
             NavigationView {
                 DatePicker(
-                    "Select deadline",
+                    "Deadline",
                     selection: $selectedDate,
-                    displayedComponents: [.date]
+                    displayedComponents: [.hourAndMinute, .date]
                 )
                 .datePickerStyle(.graphical)
                 .navigationTitle("Select Date")
@@ -56,7 +71,7 @@ struct DeadlineView: View {
                     }
                 }
             }
-            .presentationDetents([.height(450)])
+            .presentationDetents([.fraction(0.65)])
         }
     }
 }
