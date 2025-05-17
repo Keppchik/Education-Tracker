@@ -8,24 +8,53 @@
 import SwiftUI
 
 struct CleanUpPage: View {
-    @StateObject private var actions = Actions()
     @State private var taskLists: [ClassTaskList] = []
     @State private var tasks: [ClassTask] = []
+    
+    @State private var selectedTasks: Set<ClassTask> = []
+    @State private var selectedLists: Set<ClassTaskList> = []
+    @State private var isAllSelected: Bool = false
+    
+    @EnvironmentObject var modelData: ModelData
     
     var body: some View {
         NavigationView{
             VStack {
                 HStack {
                     Button(action: {
-                        actions.toggleSelectAll(taskLists: taskLists, tasks: tasks)
+                        if isAllSelected {
+                            for list in taskLists {
+                                selectedLists.remove(list)
+                            }
+                            for task in tasks {
+                                selectedTasks.remove(task)
+                            }
+                        } else {
+                            for list in taskLists {
+                                selectedLists.insert(list)
+                            }
+                            for task in tasks {
+                                selectedTasks.insert(task)
+                            }
+                        }
+                        isAllSelected.toggle()
                     }) {
-                        Text(actions.isAllSelected ? "Deselect All" : "Select All")
+                        Text(isAllSelected ? "Deselect All" : "Select All")
                             .foregroundColor(.blue)
                             .font(.subheadline)
                     }
                     Spacer()
                     Button(action: {
-                        actions.deleteSelected(taskLists: &taskLists, tasks: &tasks)
+                        for task in selectedTasks {
+                            tasks.removeAll { $0.id == task.id }
+                            modelData.allTasks.removeAll { $0.id == task.id }
+                            modelData.deleteTask(task)
+                        }
+                        for list in selectedLists {
+                            taskLists.removeAll { $0.id == list.id }
+                            modelData.allLists.removeAll { $0.id == list.id }
+                            modelData.deleteList(list)
+                        }
                     }) {
                         Image(systemName: "trash")
                             .foregroundColor(.red)
@@ -44,7 +73,7 @@ struct CleanUpPage: View {
                                 
                                 ForEach(taskLists, id: \.id) { list in
                                     HStack {
-                                        Image(systemName: actions.selectedLists.contains(list.id) ? "checkmark.circle.fill" : "circle")
+                                        Image(systemName: selectedLists.contains(list) ? "checkmark.circle.fill" : "circle")
                                             .foregroundColor(.blue)
                                         
                                         VStack(alignment: .leading) {
@@ -60,10 +89,10 @@ struct CleanUpPage: View {
                                     .background(Color(.systemGray6))
                                     .cornerRadius(10)
                                     .onTapGesture {
-                                        if actions.selectedLists.contains(list.id) {
-                                            actions.selectedLists.remove(list.id)
+                                        if selectedLists.contains(list) {
+                                            selectedLists.remove(list)
                                         } else {
-                                            actions.selectedLists.insert(list.id)
+                                            selectedLists.insert(list)
                                         }
                                     }
                                 }
@@ -78,7 +107,7 @@ struct CleanUpPage: View {
                                 
                                 ForEach(tasks, id: \.id) { task in
                                     HStack {
-                                        Image(systemName: actions.selectedTasks.contains(task.id) ? "checkmark.circle.fill" : "circle")
+                                        Image(systemName: selectedTasks.contains(task) ? "checkmark.circle.fill" : "circle")
                                             .foregroundColor(.blue)
                                         
                                         VStack(alignment: .leading) {
@@ -94,10 +123,10 @@ struct CleanUpPage: View {
                                     .background(Color(.systemGray6))
                                     .cornerRadius(10)
                                     .onTapGesture {
-                                        if actions.selectedTasks.contains(task.id) {
-                                            actions.selectedTasks.remove(task.id)
+                                        if selectedTasks.contains(task) {
+                                            selectedTasks.remove(task)
                                         } else {
-                                            actions.selectedTasks.insert(task.id)
+                                            selectedTasks.insert(task)
                                         }
                                     }
                                 }
@@ -114,8 +143,8 @@ struct CleanUpPage: View {
             }
             .padding(.horizontal)
             .onAppear {
-                taskLists = ListRepository().fetchAllLists()
-                tasks = TaskRepository().fetchAllTasks()
+                taskLists = modelData.allLists
+                tasks = modelData.allTasks
             }
         }
         .navigationTitle("Clean Up")

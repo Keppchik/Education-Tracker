@@ -15,7 +15,7 @@ struct MainView: View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 TabView(selection: $selectedIndex) {
-                    HomeView(tasks: $modelData.allTasks)
+                    HomeView()
                         .environmentObject(modelData)
                         .padding(.top)
                         .tag(PageIndex.house)
