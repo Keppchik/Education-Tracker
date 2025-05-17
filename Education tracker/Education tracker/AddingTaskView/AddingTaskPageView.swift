@@ -22,6 +22,9 @@ struct AddingTaskPageView: View {
     @State var currentScore: Int16 = 0
     @State var maxScore: Int16 = 0
     @State var description: String = ""
+    @State var selectedList: ClassTaskList? = nil
+    @State var lists: [ClassTaskList] = []
+    @State var showListPicker: Bool = false
     
     @State private var showNameError = false
     @State private var showMaxScoreError = false
@@ -67,6 +70,60 @@ struct AddingTaskPageView: View {
                 ScoreView(currentScore: $currentScore, maxScore: $maxScore, showMaxScoreError: $showMaxScoreError)
                     .padding(.vertical)
                 
+                VStack {
+                    HStack {
+                        Text("List")
+                        Spacer()
+                        Text(selectedList?.name ?? "No list")
+                            .foregroundColor(selectedList == nil ? .gray : .primary)
+                            .onTapGesture {
+                                showListPicker.toggle()
+                            }
+                    }
+                    if showListPicker {
+                        HStack {
+                            Spacer()
+                            Text("No list")
+                                .padding(.vertical, 5)
+                                .foregroundColor(selectedList == nil ? .blue : .gray)
+                            if selectedList == nil {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        .padding(.trailing,10)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.2)){
+                                selectedList = nil
+                                showListPicker = false
+                            }
+                        }
+                        ForEach(lists, id: \.self) { list in
+                            HStack {
+                                Spacer()
+                                Text(list.name)
+                                    .padding(.vertical, 5)
+                                    .foregroundColor(selectedList == list ? .blue : .gray)
+                                if selectedList == list {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            .padding(.trailing,10)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 0.2)){
+                                    selectedList = list
+                                    showListPicker = false
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(.vertical)
+
+                
                 //===== Notes/Describtion =====
                 DescribtionView(descriptionText: $description)
                     .padding(.vertical)
@@ -85,7 +142,9 @@ struct AddingTaskPageView: View {
                 currentScore = task.score
                 maxScore = task.maxScore
                 description = task.taskDescription
+                selectedList = task.list
             }
+            lists = modelData.allLists
         }
         .navigationTitle("New Task")
         
@@ -102,12 +161,14 @@ struct AddingTaskPageView: View {
                     newDescription: description,
                     newType: selectedType,
                     newScore: currentScore,
-                    newMaxScore: maxScore
+                    newMaxScore: maxScore,
+                    newList: selectedList
                 )
-                //presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             } else {
                 modelData.createTask(
                     title: name,
+                    list: selectedList,
                     date: deadline,
                     description: description,
                     type: selectedType,

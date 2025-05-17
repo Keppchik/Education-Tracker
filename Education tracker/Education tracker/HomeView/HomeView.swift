@@ -2,9 +2,9 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var modelData: ModelData
-    @State private var tasks: [ClassTask]
-    init() {
-        _tasks = State(initialValue: [])
+    @Binding private var tasks: [ClassTask]
+    init(tasks: Binding<[ClassTask]>) {
+        self._tasks = tasks
     }
     
     @State private var todayTasks: [ClassTask] = []
@@ -69,6 +69,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(tasks: .constant([]))
         .environmentObject(ModelData())
 }

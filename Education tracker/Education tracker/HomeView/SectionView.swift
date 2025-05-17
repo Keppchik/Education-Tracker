@@ -29,9 +29,9 @@ struct SectionView: View {
         deletionTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
             for index in pendingDeletionIndices {
                 if tasks[index].isDone {
-                    modelData.updateTask(tasks[index], isDone: false, newStatus: .ToDo)
+                    modelData.updateTask(tasks[index], isDone: false, newStatus: .ToDo, newList: tasks[index].list)
                 } else {
-                    modelData.updateTask(tasks[index], isDone: true, newStatus: .Done)
+                    modelData.updateTask(tasks[index], isDone: true, newStatus: .Done, newList: tasks[index].list)
                 }
             }
             pendingDeletionIndices.removeAll()

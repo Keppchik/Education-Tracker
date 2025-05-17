@@ -11,10 +11,6 @@ struct TasksButtons: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var modelData: ModelData
     
-    @State private var toDoTasks: [ClassTask] = []
-    @State private var inProgressTasks: [ClassTask] = []
-    @State private var doneTasks: [ClassTask] = []
-    
     var todoTasksCount: Int {
         modelData.allTasks.filter { task in
             task.status == StatusOptions.ToDo.rawValue
@@ -33,7 +29,7 @@ struct TasksButtons: View {
     
     var body: some View {
         HStack {
-            NavigationLink { StatusTasksView(status: .ToDo).environmentObject(modelData) }
+            NavigationLink { StatusTasksView(status: .ToDo, tasks: $modelData.allTasks).environmentObject(modelData) }
             label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -60,7 +56,7 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
             
-            NavigationLink { StatusTasksView(status: .InProgress).environmentObject(modelData) }
+            NavigationLink { StatusTasksView(status: .InProgress, tasks: $modelData.allTasks).environmentObject(modelData) }
             label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -87,13 +83,8 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
         }
-        .onAppear {
-            toDoTasks = modelData.allTasks.filter { $0.status == StatusOptions.ToDo.rawValue }
-            inProgressTasks = modelData.allTasks.filter { $0.status == StatusOptions.InProgress.rawValue}
-            doneTasks = modelData.allTasks.filter { $0.status == StatusOptions.Done.rawValue}
-        }
-        
-        NavigationLink { StatusTasksView(status: .Done).environmentObject(modelData) }
+
+        NavigationLink { StatusTasksView(status: .Done, tasks: $modelData.allTasks).environmentObject(modelData) }
         label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)

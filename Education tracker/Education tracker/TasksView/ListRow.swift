@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ListRow: View {
-    @State var name: String
-    @State var items: [ClassTask]
+    @Binding var name: String
+    @Binding var items: [ClassTask]
     @State var isExpanded = false
     @Environment(\.colorScheme) private var colorScheme
     
@@ -70,5 +70,5 @@ struct ListRow: View {
 }
 
 #Preview {
-    ListRow(name: "List name", items: [])
+    ListRow(name: .constant("List name"), items: .constant([]))
 }

@@ -55,15 +55,10 @@ extension ClassTaskList {
 }
 
 
-extension ClassTaskList {
+extension ClassTaskList: Identifiable {
     var tasksArray: [ClassTask] {
         if let tasks = tasks?.allObjects as? [ClassTask] {
-            return tasks.sorted {
-                if $0.isDone != $1.isDone {
-                    return !$0.isDone && $1.isDone
-                }
-                return $0.date < $1.date
-            }
+            return tasks
         }
         return []
     }

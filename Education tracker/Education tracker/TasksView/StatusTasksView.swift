@@ -11,9 +11,9 @@ struct StatusTasksView: View {
     var status: StatusOptions
     
     @EnvironmentObject var modelData: ModelData
-    @State private var tasks: [ClassTask]
-    init(status: StatusOptions) {
-        _tasks = State(initialValue: [])
+    @Binding private var tasks: [ClassTask]
+    init(status: StatusOptions, tasks: Binding<[ClassTask]>) {
+        self._tasks = tasks
         self.status = status
     }
     
@@ -81,7 +81,7 @@ struct StatusTasksView: View {
 
 #Preview {
     NavigationView {
-        StatusTasksView(status: .ToDo)
+        StatusTasksView(status: .ToDo, tasks: .constant([]))
             .environmentObject(ModelData())
     }
 }

@@ -53,16 +53,12 @@ class ModelData: ObservableObject {
             isDone: isDone
         )
         
-        if let list = list {
-            task.parentList = list
-            list.addToTasks(task)
-        }
-        
         allTasks.append(task)
+        objectWillChange.send()
         saveContext()
     }
     
-    func updateTask(_ task: ClassTask, newTitle: String? = nil, isDone: Bool? = nil, newDate: Date? = nil, newStatus: StatusOptions? = nil, newDescription: String? = nil, newType: TypeOptions? = nil, newScore: Int16? = nil, newMaxScore: Int16? = nil) {
+    func updateTask(_ task: ClassTask, newTitle: String? = nil, isDone: Bool? = nil, newDate: Date? = nil, newStatus: StatusOptions? = nil, newDescription: String? = nil, newType: TypeOptions? = nil, newScore: Int16? = nil, newMaxScore: Int16? = nil, newList: ClassTaskList? = nil) {
         taskRepository.updateTask(
             task,
             newTitle: newTitle,
@@ -72,24 +68,28 @@ class ModelData: ObservableObject {
             newType: newType,
             newStatus: newStatus,
             newScore: newScore,
-            newMaxScore: newMaxScore
+            newMaxScore: newMaxScore,
+            newList: newList
         )
-        saveContext()
+        fetchAllData()
         objectWillChange.send()
     }
     
     func createList(name: String) -> ClassTaskList {
         let list = listRepository.createList(name: name)
         allLists.append(list)
+        objectWillChange.send()
         return list
     }
     
     func deleteTask(_ task: ClassTask) {
         taskRepository.deleteTask(task)
+        objectWillChange.send()
     }
     
     func deleteList(_ list: ClassTaskList) {
         listRepository.deleteList(list)
+        objectWillChange.send()
     }
     
     private func saveContext() {
