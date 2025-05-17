@@ -2,9 +2,9 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding private var tasks: [ClassTask]
-    init(tasks: Binding<[ClassTask]>) {
-        self._tasks = tasks
+    @State private var tasks: [ClassTask]
+    init() {
+        self._tasks = State(initialValue: [])
     }
     
     @State private var todayTasks: [ClassTask] = []
@@ -63,12 +63,18 @@ struct HomeView: View {
             .onAppear {
                 updateTasks()
             }
+            .onDisappear() {
+                tasks = []
+                todayTasks = []
+                tomorrowTasks = []
+                laterTasks = []
+            }
             .scrollBounceBehavior(.basedOnSize)
         }
     }
 }
 
 #Preview {
-    HomeView(tasks: .constant([]))
+    HomeView()
         .environmentObject(ModelData())
 }

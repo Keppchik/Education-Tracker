@@ -159,7 +159,7 @@ struct SettingsView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         
-                    NavigationLink(destination: CleanupView()) {
+                    NavigationLink(destination: CleanUpPage()) {
                         HStack {
                             Text("Cleanup")
                                 .padding(.top)
@@ -215,13 +215,8 @@ struct SettingsView: View {
     }
 }
 
-struct CleanupView: View {
-    var body: some View {
-        Text("Cleanup Page")
-            .navigationTitle("Cleanup")
-    }
-}
-
 #Preview {
-    SettingsView()
+    NavigationView {
+        SettingsView()
+    }
 }
