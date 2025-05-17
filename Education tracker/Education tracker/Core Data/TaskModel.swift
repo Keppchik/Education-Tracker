@@ -31,6 +31,11 @@ class TaskRepository {
         task.maxScore = maxScore
         task.isDone = isDone
         
+        if let list = list {
+            list.addToTasks(task)
+            task.list = list
+        }
+        
         do {
             try context.save()
         } catch {
@@ -51,7 +56,7 @@ class TaskRepository {
         }
     }
     
-    func updateTask(_ task: ClassTask, newTitle: String? = nil, isDone: Bool? = nil, newDate: Date? = nil, newDescription: String? = nil, newType: TypeOptions? = nil, newStatus: StatusOptions? = nil, newScore: Int16? = nil, newMaxScore: Int16? = nil) {
+    func updateTask(_ task: ClassTask, newTitle: String? = nil, isDone: Bool? = nil, newDate: Date? = nil, newDescription: String? = nil, newType: TypeOptions? = nil, newStatus: StatusOptions? = nil, newScore: Int16? = nil, newMaxScore: Int16? = nil, newList: ClassTaskList? = nil) {
         if let newTitle = newTitle { task.title = newTitle }
         if let isDone = isDone { task.isDone = isDone }
         if let newDate = newDate { task.date = newDate }
@@ -61,10 +66,27 @@ class TaskRepository {
         if let newScore = newScore { task.score = newScore }
         if let newMaxScore = newMaxScore { task.maxScore = newMaxScore }
         
+        if let newList = newList {
+            task.list?.removeFromTasks(task)
+                
+            newList.addToTasks(task)
+                
+            task.list = newList
+        } else {
+            task.list?.removeFromTasks(task)
+            
+            task.list = nil
+        }
+        
+        
         CoreDataManager.shared.saveContext()
     }
     
     func deleteTask(_ task: ClassTask) {
+        if let list = task.list {
+            list.removeFromTasks(task)
+            task.list = nil
+        }
         context.delete(task)
         CoreDataManager.shared.saveContext()
     }

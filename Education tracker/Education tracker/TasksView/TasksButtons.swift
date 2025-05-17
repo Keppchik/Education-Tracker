@@ -29,7 +29,7 @@ struct TasksButtons: View {
     
     var body: some View {
         HStack {
-            Button { } //TODO: Добавить переход на страницу с заданиями
+            NavigationLink { StatusTasksView(status: .ToDo, tasks: $modelData.allTasks).environmentObject(modelData) }
             label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -42,7 +42,7 @@ struct TasksButtons: View {
                     VStack(alignment: .leading) {
                         Image(systemName: "arrow.down")
                             .font(.system(size: 24))
-                        Text("Todo")
+                        Text("ToDo")
                             .fontWeight(.bold)
                             .font(.system(size: 20))
                             .padding(.top, 10)
@@ -56,7 +56,7 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
             
-            Button { } //TODO: Добавить переход на страницу с заданиями
+            NavigationLink { StatusTasksView(status: .InProgress, tasks: $modelData.allTasks).environmentObject(modelData) }
             label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -83,8 +83,8 @@ struct TasksButtons: View {
                 .foregroundColor(.primary)
             }
         }
-        
-        Button { } //TODO: Добавить переход на страницу с заданиями
+
+        NavigationLink { StatusTasksView(status: .Done, tasks: $modelData.allTasks).environmentObject(modelData) }
         label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)

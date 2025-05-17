@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TaskDetailsView: View {
-    @State var task: ClassTask
+    @ObservedObject var task: ClassTask
     @State var editingScore: Int16 = 0
     
     init(task: ClassTask) {
@@ -17,8 +17,6 @@ struct TaskDetailsView: View {
     
     @State private var editScore = false
     
-    let predefinedTypes = ["Meeting", "Documentation", "Design", "Development", "Review"]
-    
     var formattedDeadline: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -26,137 +24,165 @@ struct TaskDetailsView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Task: \(task.title)")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                        .padding(.vertical, 20)
+        if task.managedObjectContext != nil {
+            VStack(spacing: 0) {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Task: \(task.title)")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                            .padding(.vertical, 20)
                         
-                    DetailItemView(title: "Current status:", value: StatusOptions(rawValue: task.status)!.name)
+                        DetailItemView(title: "Current status:", value: StatusOptions(rawValue: task.status)!.name)
                         
-                    Divider()
+                        Divider()
                         
-                    DetailItemView(title: "Type", value: TypeOptions(rawValue: task.type)!.name)
+                        DetailItemView(title: "Type", value: TypeOptions(rawValue: task.type)!.name)
                         
-                    Divider()
+                        Divider()
                         
-                    DetailItemView(title: "Deadline", value: formattedDeadline)
+                        DetailItemView(title: "Deadline", value: formattedDeadline)
                         
-                    Divider()
+                        Divider()
                         
-                    DetailItemView(title: "Score", value: "\(task.score)/\(task.maxScore)")
+                        DetailItemView(title: "Score", value: "\(task.score)/\(task.maxScore)")
+                        
+                        Divider()
+                        
+                        HStack {
+                            Text("List")
+                                .font(.system(size: 16))
+                                .foregroundColor(.gray)
+                            
+                            Spacer()
+                            
+                            Text(task.list?.name ?? "No List")
+                                .font(.system(size: 16))
+                                .fontWeight(.medium)
+                                .foregroundColor(.primary)
+                        }
+                        .padding(.vertical, 8)
                         .padding(.bottom, 20)
                         
-                    Text("Attachments")
-                        .font(.headline)
-                        .foregroundColor(.primary)
+                        Text("Attachments")
+                            .font(.headline)
+                            .foregroundColor(.primary)
                         
-                    VStack {
-                        Button(action: {
-                            selectedAttachment = "Client_briefing.pdf"
-                            showingAttachmentAlert = true
-                        }) {
-                            AttachmentItemView(icon: "doc.fill", name: "Client_briefing.pdf")
-                        }
+                        VStack {
+                            Button(action: {
+                                selectedAttachment = "Client_briefing.pdf"
+                                showingAttachmentAlert = true
+                            }) {
+                                AttachmentItemView(icon: "doc.fill", name: "Client_briefing.pdf")
+                            }
                             
-                        Button(action: {
-                            selectedAttachment = "Client_assets.zip"
-                            showingAttachmentAlert = true
-                        }) {
-                            AttachmentItemView(icon: "folder.fill", name: "Client_assets.zip")
+                            Button(action: {
+                                selectedAttachment = "Client_assets.zip"
+                                showingAttachmentAlert = true
+                            }) {
+                                AttachmentItemView(icon: "folder.fill", name: "Client_assets.zip")
+                            }
                         }
-                    }
-                    
-                    Text("Description")
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                        .padding(.top)
-                    
-                    
-                    Text(task.taskDescription.isEmpty ? "No description provided" : task.taskDescription)
-                        .font(.system(size: 16))
-                        .fontWeight(.medium)
-                        .foregroundColor(.primary)
                         
+                        Text("Description")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .padding(.top)
+                        
+                        
+                        Text(task.taskDescription.isEmpty ? "No description provided" : task.taskDescription)
+                            .font(.system(size: 16))
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                        
+                    }
+                    .padding()
                 }
-                .padding()
+                
+                Button(action: {
+                    editScore = true
+                }) {
+                    Text("Edit Score")
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 15)
+                        .background(.gray)
+                        .cornerRadius(8)
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 8)
+                
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Done")
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 15)
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 20)
             }
-            
-            Button(action: {
-                editScore = true
-            }) {
-                Text("Edit Score")
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 15)
-                    .background(.gray)
-                    .cornerRadius(8)
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 8)
-            
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Done")
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 15)
-                    .background(Color.blue)
-                    .cornerRadius(8)
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 20)
-        }
-        .navigationTitle("Task Details")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(
-            trailing: NavigationLink {
-                AddingTaskPageView(isEdit: true, task: task)
-                    .environmentObject(modelData)
-            } label: {
-                Image(systemName: "pencil")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.primary)
-                    .padding(.trailing, 8)
-            }
-        )
-        .sheet(isPresented: $editScore) {
-            NavigationView {
-                Form {
-                    Section {
-                        Stepper(value: $editingScore, in: 0...task.maxScore) {
-                            Text("Score: \(editingScore)/\(task.maxScore)")
+            .navigationTitle("Task Details")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                trailing: NavigationLink {
+                    AddingTaskPageView(isEdit: true, task: task)
+                        .environmentObject(modelData)
+                } label: {
+                    Image(systemName: "pencil")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.primary)
+                        .padding(.trailing, 8)
+                }
+            )
+            .sheet(isPresented: $editScore) {
+                NavigationView {
+                    Form {
+                        Section {
+                            Stepper(value: $editingScore, in: 0...task.maxScore) {
+                                Text("Score: \(editingScore)/\(task.maxScore)")
+                            }
+                            .onChange(of: editingScore) {
+                                modelData.updateTask(task, newScore: editingScore, newList: task.list)
+                            }
                         }
-                        .onChange(of: editingScore) {
-                            modelData.updateTask(task, newScore: editingScore)
+                    }
+                    .navigationTitle("Edit Score")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                modelData.updateTask(task, newScore: editingScore, newList: task.list)
+                                editScore = false
+                            }
                         }
                     }
                 }
-                .navigationTitle("Edit Score")
-                .navigationBarTitleDisplayMode(.inline)
+                .presentationDetents([.fraction(0.2)])
+            }
+            .alert("Attachment Selected", isPresented: $showingAttachmentAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("You selected: \(selectedAttachment)")
+            }
+        } else {
+            Text("Задача была удалена")
+                .navigationTitle("")
                 .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") {
-                            modelData.updateTask(task, newScore: editingScore)
-                            editScore = false
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Назад") {
+                            presentationMode.wrappedValue.dismiss()
                         }
                     }
                 }
-            }
-            .presentationDetents([.fraction(0.2)])
-        }
-        .alert("Attachment Selected", isPresented: $showingAttachmentAlert) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("You selected: \(selectedAttachment)")
         }
     }
 }
