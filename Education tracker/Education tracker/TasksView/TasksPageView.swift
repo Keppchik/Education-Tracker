@@ -59,6 +59,9 @@ struct TasksPageView: View {
         .onAppear() {
             myLists = modelData.allLists
         }
+        .onDisappear() {
+            myLists = []
+        }
         .sheet(isPresented: $newListSheet) {
             VStack(alignment: .center, spacing: 16) {
                 HStack {
