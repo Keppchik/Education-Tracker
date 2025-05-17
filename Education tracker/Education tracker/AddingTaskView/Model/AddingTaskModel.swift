@@ -15,11 +15,11 @@ enum StatusOptions: Int16, Identifiable, CaseIterable {
     var name: String {
         switch self {
         case .ToDo:
-            return "To Do"
+            return "ToDo"
         case .InProgress:
             return "In Progress"
         case .Done:
-            return "Done"
+            return "Completed"
         }
     }
     var id: Int16 {

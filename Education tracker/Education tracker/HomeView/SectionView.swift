@@ -11,7 +11,7 @@ struct SectionView: View {
     let sectionName: String
     @State private var pendingDeletionIndices = Set<Int>()
     @State private var deletionTimer: Timer?
-    @State var tasks: [ClassTask]
+    @Binding var tasks: [ClassTask]
 
     @EnvironmentObject var modelData: ModelData
     var sectionEnum: SectionEnum
@@ -28,7 +28,11 @@ struct SectionView: View {
             
         deletionTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
             for index in pendingDeletionIndices {
-                modelData.updateTask(tasks[index], isDone: true, newStatus: .Done)
+                if tasks[index].isDone {
+                    modelData.updateTask(tasks[index], isDone: false, newStatus: .ToDo, newList: tasks[index].list)
+                } else {
+                    modelData.updateTask(tasks[index], isDone: true, newStatus: .Done, newList: tasks[index].list)
+                }
             }
             pendingDeletionIndices.removeAll()
             updateTasks()
@@ -88,7 +92,7 @@ struct SectionView: View {
     return NavigationView {
         SectionView(
             sectionName: "Test Section",
-            tasks: [task1],
+            tasks: .constant([task1]),
             sectionEnum: .today,
             updateTasks: {}
         )

@@ -18,7 +18,7 @@ public class ClassTask: NSManagedObject {
     @NSManaged public var score: Int16
     @NSManaged public var maxScore: Int16
     @NSManaged public var taskDescription: String
-    @NSManaged public var parentList: ClassTaskList?
+    @NSManaged public var list: ClassTaskList?
 }
 
 extension ClassTask {

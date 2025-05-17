@@ -2,9 +2,9 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var modelData: ModelData
-    @State private var tasks: [ClassTask]
-    init() {
-        _tasks = State(initialValue: [])
+    @Binding private var tasks: [ClassTask]
+    init(tasks: Binding<[ClassTask]>) {
+        self._tasks = tasks
     }
     
     @State private var todayTasks: [ClassTask] = []
@@ -41,15 +41,15 @@ struct HomeView: View {
                 
             ScrollView {
                 if !todayTasks.isEmpty {
-                    SectionView(sectionName: "TODAY", tasks: todayTasks, sectionEnum: .today, updateTasks: updateTasks)
+                    SectionView(sectionName: "TODAY", tasks: $todayTasks, sectionEnum: .today, updateTasks: updateTasks)
                         .environmentObject(modelData)
                 }
                 if !tomorrowTasks.isEmpty {
-                    SectionView(sectionName: "TOMORROW", tasks: tomorrowTasks, sectionEnum: .tomorrow, updateTasks: updateTasks)
+                    SectionView(sectionName: "TOMORROW", tasks: $tomorrowTasks, sectionEnum: .tomorrow, updateTasks: updateTasks)
                         .environmentObject(modelData)
                 }
                 if !laterTasks.isEmpty {
-                    SectionView(sectionName: "LATER", tasks: laterTasks, sectionEnum: .later, updateTasks: updateTasks)
+                    SectionView(sectionName: "LATER", tasks: $laterTasks, sectionEnum: .later, updateTasks: updateTasks)
                         .environmentObject(modelData)
                 }
                 if tasks.filter({ !$0.isDone }).isEmpty {
@@ -69,6 +69,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(tasks: .constant([]))
         .environmentObject(ModelData())
 }
